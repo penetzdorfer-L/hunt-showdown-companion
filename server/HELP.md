@@ -1,8 +1,3 @@
-# Read Me First
-The following was discovered as part of building this project:
-
-* The original package name 'com.lupe..huntcompanion' is invalid and this project uses 'com.lupe.huntcompanion' instead.
-
 # Getting Started
 
 ### Reference Documentation
