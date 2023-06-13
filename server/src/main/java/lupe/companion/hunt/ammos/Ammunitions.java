@@ -1,9 +1,6 @@
 package lupe.companion.hunt.ammos;
 
 import jakarta.persistence.*;
-import lupe.companion.hunt.weapons.Weapons;
-
-import java.util.Set;
 
 @Entity
 @Table(name = "ammunitions")
@@ -12,7 +9,15 @@ public class Ammunitions {
     @GeneratedValue
     private final long ID;
     private final String type;
-    @ManyToOne
-    @JoinColumn()
-    private Set<Weapons> availableFor;
+
+    public Ammunitions(long id, String type) {
+        ID = id;
+        this.type = type;
+    }
+    public long getID() {
+        return ID;
+    }
+    public String getType() {
+        return type;
+    }
 }

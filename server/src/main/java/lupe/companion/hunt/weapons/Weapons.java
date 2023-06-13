@@ -1,6 +1,8 @@
 package lupe.companion.hunt.weapons;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lupe.companion.hunt.ammos.Ammunitions;
 
 import java.util.Set;
@@ -13,9 +15,9 @@ public class Weapons {
     private final long ID;
     private final int weaponID;
     private final String name;
-    private final int slots;
-    private final int bloodlineRank;
-    private final int specialAmmoSlots;
+    private int slots;
+    private int bloodlineRank;
+    private int specialAmmoSlots;
     @OneToMany(mappedBy = "ammunitions")
     private final Set<Ammunitions> ammoSet;
 
@@ -33,6 +35,10 @@ public class Weapons {
         return ID;
     }
 
+    public int getWeaponID() {
+        return weaponID;
+    }
+
     public String getName() {
         return name;
     }
@@ -41,12 +47,24 @@ public class Weapons {
         return slots;
     }
 
+    public void setSlots(int slots) {
+        this.slots = slots;
+    }
+
     public int getBloodlineRank() {
         return bloodlineRank;
     }
 
+    public void setBloodlineRank(int bloodlineRank) {
+        this.bloodlineRank = bloodlineRank;
+    }
+
     public int getSpecialAmmoSlots() {
         return specialAmmoSlots;
+    }
+
+    public void setSpecialAmmoSlots(int specialAmmoSlots) {
+        this.specialAmmoSlots = specialAmmoSlots;
     }
 
     public Set<Ammunitions> getAmmoSet() {
