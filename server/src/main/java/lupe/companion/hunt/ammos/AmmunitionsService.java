@@ -1,4 +1,4 @@
 package lupe.companion.hunt.ammos;
 
-public class AmmosService {
+public class AmmunitionsService {
 }

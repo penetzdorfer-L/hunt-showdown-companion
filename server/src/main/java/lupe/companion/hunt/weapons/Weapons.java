@@ -1,8 +1,6 @@
 package lupe.companion.hunt.weapons;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lupe.companion.hunt.ammos.Ammunitions;
 
 import java.util.Set;
@@ -12,22 +10,30 @@ import java.util.Set;
 public class Weapons {
     @Id
     @GeneratedValue
-    private final long ID;
-    private final int weaponID;
-    private final String name;
+    private long ID;
+    private int weaponID;
+    private String name;
     private int slots;
     private int bloodlineRank;
-    private int specialAmmoSlots;
-    @OneToMany(mappedBy = "ammunitions")
-    private final Set<Ammunitions> ammoSet;
+    private int ammoSlots;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "weapons_ammunitions_connection",
+            joinColumns = {@JoinColumn(name = "weapons_weaponID")},
+            inverseJoinColumns = {@JoinColumn(name = "ammunitions_availableFor")}
+    )
+    private Set<Ammunitions> ammoSet;
 
-    public Weapons(long ID, int weaponID, String name, int slots, int bloodlineRank, int specialAmmoSlots, Set<Ammunitions> ammoSet) {
+    public Weapons() {
+    }
+
+    public Weapons(long ID, int weaponID, String name, int slots, int bloodlineRank, int ammoSlots, Set<Ammunitions> ammoSet) {
         this.ID = ID;
         this.weaponID = weaponID;
         this.name = name;
         this.slots = slots;
         this.bloodlineRank = bloodlineRank;
-        this.specialAmmoSlots = specialAmmoSlots;
+        this.ammoSlots = ammoSlots;
         this.ammoSet = ammoSet;
     }
 
@@ -59,12 +65,12 @@ public class Weapons {
         this.bloodlineRank = bloodlineRank;
     }
 
-    public int getSpecialAmmoSlots() {
-        return specialAmmoSlots;
+    public int getAmmoSlots() {
+        return ammoSlots;
     }
 
-    public void setSpecialAmmoSlots(int specialAmmoSlots) {
-        this.specialAmmoSlots = specialAmmoSlots;
+    public void setAmmoSlots(int specialAmmoSlots) {
+        this.ammoSlots = specialAmmoSlots;
     }
 
     public Set<Ammunitions> getAmmoSet() {
