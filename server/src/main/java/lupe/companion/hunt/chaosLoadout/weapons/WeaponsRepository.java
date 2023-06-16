@@ -1,4 +1,4 @@
-package lupe.companion.hunt.weapons;
+package lupe.companion.hunt.chaosLoadout.weapons;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

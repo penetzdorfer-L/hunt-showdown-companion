@@ -1,7 +1,7 @@
-package lupe.companion.hunt.weapons;
+package lupe.companion.hunt.chaosLoadout.weapons;
 
 import jakarta.persistence.*;
-import lupe.companion.hunt.ammos.Ammunitions;
+import lupe.companion.hunt.chaosLoadout.ammos.Ammunitions;
 
 import java.util.Set;
 
@@ -9,18 +9,18 @@ import java.util.Set;
 @Table(name = "weapons")
 public class Weapons {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
     private int weaponID;
     private String name;
     private int slots;
     private int bloodlineRank;
     private int ammoSlots;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "weapons_ammunitions_connection",
-            joinColumns = {@JoinColumn(name = "weapons_weaponID")},
-            inverseJoinColumns = {@JoinColumn(name = "ammunitions_availableFor")}
+            joinColumns = {@JoinColumn(name = "weapons_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ammunitions_ID")}
     )
     private Set<Ammunitions> ammoSet;
 
