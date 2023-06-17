@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface ToolsRepository extends JpaRepository<Tools, Long> {
     Tools findToolsByNameContainingIgnoreCase(String parameter);
+    Tools findToolsByNameIsContainingIgnoreCase(String parameter);
 }

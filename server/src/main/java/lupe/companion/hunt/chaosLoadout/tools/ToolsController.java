@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.tools.Tool;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="/api/v1/tools")
@@ -25,6 +27,7 @@ public class ToolsController {
     public Tools getBySearch(
             @PathVariable String name
     ) {
+        System.out.println(name);
         return toolsRepository.findToolsByNameContainingIgnoreCase(name);
     }
 }
