@@ -1,4 +1,4 @@
-package lupe.companion.hunt.chaosLoadout.ammos;
+package lupe.companion.hunt.chaosLoadout.ammunitions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

@@ -1,7 +1,7 @@
 package lupe.companion.hunt.chaosLoadout.weapons;
 
 import jakarta.persistence.*;
-import lupe.companion.hunt.chaosLoadout.ammos.Ammunitions;
+import lupe.companion.hunt.chaosLoadout.ammunitions.Ammunitions;
 
 import java.util.Set;
 
@@ -16,24 +16,22 @@ public class Weapons {
     private int slots;
     private int bloodlineRank;
     private int ammoSlots;
+    private boolean dualwielable;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "weapons_ammunitions_connection",
-            joinColumns = {@JoinColumn(name = "weapons_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ammunitions_ID")}
-    )
+    @JoinTable(name = "weapons_ammunitions_connection", joinColumns = {@JoinColumn(name = "weapons_ID")}, inverseJoinColumns = {@JoinColumn(name = "ammunitions_ID")})
     private Set<Ammunitions> ammoSet;
 
     public Weapons() {
     }
 
-    public Weapons(long ID, int weaponID, String name, int slots, int bloodlineRank, int ammoSlots, Set<Ammunitions> ammoSet) {
+    public Weapons(long ID, int weaponID, String name, int slots, int bloodlineRank, int ammoSlots, boolean dualwielable, Set<Ammunitions> ammoSet) {
         this.ID = ID;
         this.weaponID = weaponID;
         this.name = name;
         this.slots = slots;
         this.bloodlineRank = bloodlineRank;
         this.ammoSlots = ammoSlots;
+        this.dualwielable = dualwielable;
         this.ammoSet = ammoSet;
     }
 
@@ -75,5 +73,13 @@ public class Weapons {
 
     public Set<Ammunitions> getAmmoSet() {
         return ammoSet;
+    }
+
+    public boolean isDualwielable() {
+        return dualwielable;
+    }
+
+    public void setDualwielable(boolean dualwielable) {
+        this.dualwielable = dualwielable;
     }
 }

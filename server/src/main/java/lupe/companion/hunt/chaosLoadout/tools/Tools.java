@@ -9,7 +9,6 @@ public class Tools {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-
     private String name;
     private int bloodlineRank;
     @ManyToOne

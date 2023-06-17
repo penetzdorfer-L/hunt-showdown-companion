@@ -1,4 +1,4 @@
-package lupe.companion.hunt.chaosLoadout.ammos;
+package lupe.companion.hunt.chaosLoadout.ammunitions;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
