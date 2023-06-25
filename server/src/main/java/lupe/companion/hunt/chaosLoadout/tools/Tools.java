@@ -13,12 +13,12 @@ import lupe.companion.hunt.chaosLoadout.loadout.Loadouts;
 @Table(name = "tools")
 public class Tools {
     @Id
-    private int toolID;
+    private String toolID;
     private String name;
     private int bloodlineRank;
     private int price;
+    private String type;
     @ManyToOne
     @JoinColumn(name = "loadouts_id")
     private Loadouts loadouts;
-
 }

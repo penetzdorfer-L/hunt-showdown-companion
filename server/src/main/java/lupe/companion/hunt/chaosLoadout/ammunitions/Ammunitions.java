@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "ammunitions")
 public class Ammunitions {
     @Id
-    private int ammoID;
+    private String ammoID;
     private String name;
     @ManyToMany(mappedBy = "ammoSet")
     @JsonIgnore

@@ -20,10 +20,10 @@ public class Loadouts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-    @ManyToOne
-    private Weapons primary;
-    @ManyToOne
-    private Weapons secondary;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadouts")
+    private List<Weapons> primary;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadouts")
+    private List<Weapons> secondary;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadouts")
     private Set<Tools> tools;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadouts")
