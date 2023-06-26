@@ -18,7 +18,7 @@ public class ToolService {
     public Set<Tool> getRandomTools(LoadoutRequest request) {
         Set<Tool> randomTools = new HashSet<>();
         requestChecker(request, randomTools);
-        List<Tool> toolList = toolRepository.findAll();
+        List<Tool> toolList = toolRepository.findToolsByBloodlineRankIsLessThanEqual(request.getBloodlineRank());
         addToolsToList(randomTools, toolList);
         return randomTools;
     }
