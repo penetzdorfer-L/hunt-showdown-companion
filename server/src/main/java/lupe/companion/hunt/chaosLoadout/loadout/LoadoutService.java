@@ -21,37 +21,23 @@ public class LoadoutService {
     private ToolService toolService;
     private ConsumableService consumableService;
     public Loadout generateLoadout(LoadoutRequest request) {
-        List<Weapon> primary = getRandomPrimary(
+        List<Weapon> primary = weaponService.getRandomPrimary(
                 request.getBloodlineRank(),
                 request.isDualWield(),
                 request.isQuarterMaster(),
                 request.isSpecialAmmo()
         );
-        List<Weapon> secondary = getRandomSecondary(
+        List<Weapon> secondary = weaponService.getRandomSecondary(
                 request.getBloodlineRank(),
                 request.isDualWield(),
                 request.isQuarterMaster(),
                 request.isSpecialAmmo(),
                 getSlotsAfterPrimary(primary)
         );
-        Set<Tool> tools = getRandomTools(request.getBloodlineRank(), request.isForceMelee(), request.isForceFirstAidKit());
-        List<Consumable> consumables = getRandomConsumables(request.getBloodlineRank());
+        Set<Tool> tools = toolService.getRandomTools(request.getBloodlineRank(), request.isForceMelee(), request.isForceFirstAidKit());
+        List<Consumable> consumables = consumableService.getRandomConsumables(request.getBloodlineRank());
         int totalPrice = calculatePrice(primary, secondary, tools, consumables);
         return new Loadout(1,primary,secondary,tools,consumables,totalPrice);
-    }
-    private List<Weapon> getRandomPrimary(int bloodlineRank, boolean dualWield, boolean quarterMaster, boolean specialAmmo) {
-        return null;
-    }
-
-    private List<Weapon> getRandomSecondary(int bloodlineRank, boolean dualWield, boolean quarterMaster, boolean specialAmmo, int slotsUsed) {
-        return null;
-    }
-
-    private Set<Tool> getRandomTools(int bloodlineRank, boolean forceMelee, boolean forceFirstAidKit) {
-        return null;
-    }
-    private List<Consumable> getRandomConsumables(int bloodlineRank) {
-        return null;
     }
     private int calculatePrice(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables) {
         int primaryValue = primary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);

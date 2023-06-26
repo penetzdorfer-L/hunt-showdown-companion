@@ -9,7 +9,6 @@ import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
 
 import java.util.Set;
 
-
 @Entity
 @Data
 @NoArgsConstructor
