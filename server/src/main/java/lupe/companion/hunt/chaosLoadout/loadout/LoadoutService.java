@@ -24,7 +24,7 @@ public class LoadoutService {
         List<Weapon> primary = weaponService.getRandomPrimary(request);
         List<Weapon> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
         Set<Tool> tools = toolService.getRandomTools(request);
-        List<Consumable> consumables = consumableService.getRandomConsumables(request.getBloodlineRank());
+        List<Consumable> consumables = consumableService.getRandomConsumables(request);
         int totalPrice = calculatePrice(primary, secondary, tools, consumables);
         return new Loadout(1,primary,secondary,tools,consumables,totalPrice);
     }
