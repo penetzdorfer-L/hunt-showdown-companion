@@ -10,10 +10,9 @@ import java.util.Random;
 public class HelperFunctions {
     private final Random random;
 
-    public int getRandomInteger(int origin, int boundPlusOne) {
+    public int getRandomIndex(int origin, int boundPlusOne) {
         return random.nextInt(origin, boundPlusOne);
     }
-
     public boolean isDualwield() {
         int flip = random.nextInt(0, 101);
         return flip >= 80;
