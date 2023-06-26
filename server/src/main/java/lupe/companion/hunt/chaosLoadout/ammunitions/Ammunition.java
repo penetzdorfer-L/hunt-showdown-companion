@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lupe.companion.hunt.chaosLoadout.weapons.Weapons;
+import lupe.companion.hunt.chaosLoadout.weapons.Weapon;
 
 import java.util.List;
 
@@ -14,12 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ammunitions")
-public class Ammunitions {
+public class Ammunition {
     @Id
     private String ammoID;
     private String name;
+    private String typeOfAmmo;
     @ManyToMany(mappedBy = "ammoSet")
     @JsonIgnore
-    private List<Weapons> availableFor;
+    private List<Weapon> availableFor;
     private int price;
 }

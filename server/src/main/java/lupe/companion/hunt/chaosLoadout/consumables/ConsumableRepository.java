@@ -4,5 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ConsumablesRepository extends JpaRepository<Consumables, Long> {
+public interface ConsumableRepository extends JpaRepository<Consumable, Long> {
+    Consumable findConsumableByConsumableID(String parameter);
 }

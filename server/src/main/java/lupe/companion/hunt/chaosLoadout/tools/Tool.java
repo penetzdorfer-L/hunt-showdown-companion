@@ -4,14 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lupe.companion.hunt.chaosLoadout.loadout.Loadouts;
+import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tools")
-public class Tools {
+public class Tool {
     @Id
     private String toolID;
     private String name;
@@ -20,5 +20,5 @@ public class Tools {
     private String type;
     @ManyToOne
     @JoinColumn(name = "loadouts_id")
-    private Loadouts loadouts;
+    private Loadout loadout;
 }

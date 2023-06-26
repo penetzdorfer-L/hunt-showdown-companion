@@ -4,5 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AmmunitionsRepository extends JpaRepository<Ammunitions, Long> {
+public interface AmmunitionRepository extends JpaRepository<Ammunition, Long> {
+    Ammunition findAmmunitionsByAmmoID(String ammoid);
 }

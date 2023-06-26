@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface WeaponsRepository extends JpaRepository<Weapons, Long> {
-    List<Weapons> findWeaponsByNameIsContainingIgnoreCase(String parameter);
+public interface WeaponRepository extends JpaRepository<Weapon, Long> {
+    Weapon findWeaponsByWeaponID(String parameter);
+    List<Weapon> findWeaponsBySlotsEquals(int parameter);
 }

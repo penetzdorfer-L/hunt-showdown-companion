@@ -1,12 +1,11 @@
 package lupe.companion.hunt.chaosLoadout.weapons;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lupe.companion.hunt.chaosLoadout.ammunitions.Ammunitions;
-import lupe.companion.hunt.chaosLoadout.loadout.Loadouts;
+import lupe.companion.hunt.chaosLoadout.ammunitions.Ammunition;
+import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
 
 import java.util.Set;
 
@@ -16,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "weapons")
-public class Weapons {
+public class Weapon {
     @Id
     private String weaponID;
     private String name;
@@ -29,9 +28,9 @@ public class Weapons {
             joinColumns = {@JoinColumn(name = "weapons_weaponID")},
             inverseJoinColumns = {@JoinColumn(name = "ammunitions_ammoID")}
     )
-    private Set<Ammunitions> ammoSet;
+    private Set<Ammunition> ammoSet;
     @ManyToOne
     @JoinColumn(name = "loadouts_id")
-    private Loadouts loadouts;
+    private Loadout loadout;
     private int price;
 }
