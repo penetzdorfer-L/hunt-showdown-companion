@@ -23,7 +23,7 @@ public class LoadoutService {
     public Loadout generateLoadout(LoadoutRequest request) {
         List<Weapon> primary = weaponService.getRandomPrimary(request);
         List<Weapon> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
-        Set<Tool> tools = toolService.getRandomTools(request.getBloodlineRank(), request.isForceMelee(), request.isForceFirstAidKit());
+        Set<Tool> tools = toolService.getRandomTools(request);
         List<Consumable> consumables = consumableService.getRandomConsumables(request.getBloodlineRank());
         int totalPrice = calculatePrice(primary, secondary, tools, consumables);
         return new Loadout(1,primary,secondary,tools,consumables,totalPrice);
@@ -35,7 +35,7 @@ public class LoadoutService {
         int consumablesValue = consumables.stream().reduce(0, (currentPrice, consumable) -> currentPrice + consumable.getPrice(), Integer::sum);
         return primaryValue + secondaryValue + toolsValue + consumablesValue;
     }
-    private static Integer getSlotsAfterPrimary(List<Weapon> primary) {
+    private Integer getSlotsAfterPrimary(List<Weapon> primary) {
         return primary.stream()
                 .reduce(0, (accumulator, weapon) -> accumulator + weapon.getSlots(), Integer::sum);
     }
