@@ -9,4 +9,5 @@ import java.util.List;
 public interface WeaponRepository extends JpaRepository<Weapon, Long> {
     Weapon findWeaponsByWeaponID(String parameter);
     List<Weapon> findWeaponsBySlotsEquals(int parameter);
+    List<Weapon> findWeaponsByBloodlineRankBefore(int parameter);
 }
