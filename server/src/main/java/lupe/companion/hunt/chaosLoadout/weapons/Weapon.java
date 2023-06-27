@@ -1,5 +1,6 @@
 package lupe.companion.hunt.chaosLoadout.weapons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,9 @@ public class Weapon {
             inverseJoinColumns = {@JoinColumn(name = "ammunitions_ammoID")}
     )
     private Set<Ammunition> ammoSet;
-    @ManyToOne
-    @JoinColumn(name = "loadouts_id")
-    private Loadout loadout;
     private int price;
+    @ManyToOne
+    private Loadout primaryWeapon;
+    @ManyToOne
+    private Loadout secondaryWeapon;
 }

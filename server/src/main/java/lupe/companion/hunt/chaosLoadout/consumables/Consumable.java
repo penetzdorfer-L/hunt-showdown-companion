@@ -1,5 +1,6 @@
 package lupe.companion.hunt.chaosLoadout.consumables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,6 @@ public class Consumable {
     private int price;
     private String type;
     @ManyToOne
-    @JoinColumn(name = "loadouts_id")
+    @JsonIgnore
     private Loadout loadout;
 }

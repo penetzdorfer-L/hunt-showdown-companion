@@ -7,5 +7,4 @@ import java.util.List;
 
 @Repository
 public interface LoadoutRepository extends JpaRepository<Loadout, Long> {
-    List<Loadout> findDistinctFirstByPrimary();
 }

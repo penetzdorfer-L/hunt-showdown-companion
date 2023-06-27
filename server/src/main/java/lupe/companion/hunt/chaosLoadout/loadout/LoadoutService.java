@@ -21,24 +21,24 @@ public class LoadoutService {
     private ToolService toolService;
     private ConsumableService consumableService;
     public Loadout generateLoadout(LoadoutRequest request) {
-        List<Weapon> primary = weaponService.getRandomPrimary(
-                request.getBloodlineRank(),
-                request.isDualWield(),
-                request.isQuarterMaster(),
-                request.isSpecialAmmo()
-        );
-        List<Weapon> secondary = weaponService.getRandomSecondary(
-                request.getBloodlineRank(),
-                request.isDualWield(),
-                request.isQuarterMaster(),
-                request.isSpecialAmmo(),
-                getSlotsAfterPrimary(primary)
-        );
-        Set<Tool> tools = toolService.getRandomTools(request.getBloodlineRank(), request.isForceMelee(), request.isForceFirstAidKit());
-        List<Consumable> consumables = consumableService.getRandomConsumables(request.getBloodlineRank());
+        List<Weapon> primary = weaponService.getRandomPrimary(request);
+        List<Weapon> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
+        Set<Tool> tools = toolService.getRandomTools(request);
+        List<Consumable> consumables = consumableService.getRandomConsumables(request);
         int totalPrice = calculatePrice(primary, secondary, tools, consumables);
-        return new Loadout(1,primary,secondary,tools,consumables,totalPrice);
+        return constructLoadout(primary, secondary, tools, consumables, totalPrice);
     }
+
+    private Loadout constructLoadout(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables, int totalPrice) {
+        Loadout randomLoadout = new Loadout();
+        randomLoadout.setPrimary(primary);
+        randomLoadout.setSecondary(secondary);
+        randomLoadout.setTools(tools);
+        randomLoadout.setConsumables(consumables);
+        randomLoadout.setTotalPrice(totalPrice);
+        return randomLoadout;
+    }
+
     private int calculatePrice(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables) {
         int primaryValue = primary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);
         int secondaryValue = secondary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);
@@ -46,7 +46,7 @@ public class LoadoutService {
         int consumablesValue = consumables.stream().reduce(0, (currentPrice, consumable) -> currentPrice + consumable.getPrice(), Integer::sum);
         return primaryValue + secondaryValue + toolsValue + consumablesValue;
     }
-    private static Integer getSlotsAfterPrimary(List<Weapon> primary) {
+    private Integer getSlotsAfterPrimary(List<Weapon> primary) {
         return primary.stream()
                 .reduce(0, (accumulator, weapon) -> accumulator + weapon.getSlots(), Integer::sum);
     }

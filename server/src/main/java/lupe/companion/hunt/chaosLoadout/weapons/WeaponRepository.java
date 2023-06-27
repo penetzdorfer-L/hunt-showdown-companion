@@ -7,6 +7,8 @@ import java.util.List;
 
 @Repository
 public interface WeaponRepository extends JpaRepository<Weapon, Long> {
-    Weapon findWeaponsByWeaponID(String parameter);
-    List<Weapon> findWeaponsBySlotsEquals(int parameter);
+    Weapon findWeaponsByWeaponID(String id);
+    List<Weapon> findWeaponsBySlotsEquals(int slots);
+    List<Weapon> findWeaponsByBloodlineRankLessThanEqual(int bloodline);
+    List<Weapon> findWeaponsByBloodlineRankLessThanEqualAndSlotsLessThanEqual(int bloodline, int slots);
 }
