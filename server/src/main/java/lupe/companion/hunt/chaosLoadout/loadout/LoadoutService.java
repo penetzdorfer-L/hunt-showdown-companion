@@ -1,9 +1,9 @@
 package lupe.companion.hunt.chaosLoadout.loadout;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lupe.companion.hunt.chaosLoadout.ammunitions.AmmunitionService;
 import lupe.companion.hunt.chaosLoadout.consumables.ConsumableService;
+import lupe.companion.hunt.chaosLoadout.loadout.data.LoadOutItem;
 import lupe.companion.hunt.chaosLoadout.loadout.data.RandomAmmo;
 import lupe.companion.hunt.chaosLoadout.loadout.data.RandomConsumable;
 import lupe.companion.hunt.chaosLoadout.loadout.data.RandomWeapon;
@@ -12,6 +12,7 @@ import lupe.companion.hunt.chaosLoadout.tools.ToolService;
 import lupe.companion.hunt.chaosLoadout.weapons.WeaponService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -48,13 +49,18 @@ public class LoadoutService {
     }
 
     private int calculatePrice(List<RandomWeapon> primary, List<RandomWeapon> secondary, Set<Tool> tools, List<RandomConsumable> consumables, List<RandomAmmo> primaryAmmo, List<RandomAmmo> secondaryAmmo) {
-        int primaryValue = primary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);
-        int secondaryValue = secondary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);
+        int primaryValue = streamPrices(primary);
+        int secondaryValue = streamPrices(secondary);
         int toolsValue = tools.stream().reduce(0, (currentPrice, tool) -> currentPrice + tool.getPrice(), Integer::sum);
         int consumablesValue = consumables.stream().reduce(0, (currentPrice, consumable) -> currentPrice + consumable.getPrice(), Integer::sum);
         int primaryAmmoValue = primaryAmmo.stream().reduce(0, (currentPrice, ammo) -> currentPrice + ammo.getPrice(), Integer::sum);
         int secondaryAmmoValue = secondaryAmmo.stream().reduce(0, (currentPrice, ammo) -> currentPrice + ammo.getPrice(), Integer::sum);
         return primaryValue + secondaryValue + toolsValue + consumablesValue + primaryAmmoValue + secondaryAmmoValue;
+    }
+
+    //TODO: make Wildcard method that takes every line from calculatePrice
+    private int streamPrices(List<RandomWeapon> lists) {
+        return lists.stream().reduce(0, (currentPrice, item) -> currentPrice + item.getPrice(), Integer::sum);
     }
     private Integer getSlotsAfterPrimary(List<RandomWeapon> primary) {
         return primary.stream()
