@@ -24,7 +24,7 @@ public class LoadoutController {
     public List<Loadout> filterByMostRolled() {
         return loadoutRepository.findAll();
     }
-    @PostMapping(path = "/")
+    @PostMapping(path = "/generate")
     @ResponseStatus(HttpStatus.CREATED)
     public Loadout generateLoadout(
             @RequestBody String json

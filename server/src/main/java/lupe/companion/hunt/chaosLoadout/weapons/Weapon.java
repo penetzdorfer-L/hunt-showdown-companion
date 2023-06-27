@@ -29,7 +29,7 @@ public class Weapon {
     )
     private Set<Ammunition> ammoSet;
     @ManyToOne
-    @JoinColumn(name = "loadouts_id")
+    @JoinColumn(name = "loadouts_id", insertable = false, updatable = false)
     private Loadout loadout;
     private int price;
 }

@@ -1,5 +1,6 @@
 package lupe.companion.hunt.chaosLoadout.tools;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Tool {
     private int price;
     private String type;
     @ManyToOne
-    @JoinColumn(name = "loadouts_id")
+//    @JoinColumn(name = "loadouts_id")
+    @JoinColumn(name="loadouts_id", insertable = false, updatable = false)
     private Loadout loadout;
 }
