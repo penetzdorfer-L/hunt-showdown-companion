@@ -34,7 +34,7 @@ public class LoadoutController {
             ObjectMapper objectMapper = new ObjectMapper();
             LoadoutRequest loadoutRequest = objectMapper.readValue(json, LoadoutRequest.class);
             Loadout generateLoadout = loadoutService.generateLoadout(loadoutRequest);
-            loadoutRepository.save(generateLoadout);
+            loadoutRepository.saveAndFlush(generateLoadout);
             return generateLoadout;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

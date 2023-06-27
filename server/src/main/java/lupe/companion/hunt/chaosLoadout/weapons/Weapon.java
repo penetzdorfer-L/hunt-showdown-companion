@@ -1,5 +1,6 @@
 package lupe.companion.hunt.chaosLoadout.weapons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,4 +30,8 @@ public class Weapon {
     )
     private Set<Ammunition> ammoSet;
     private int price;
+    @ManyToOne
+    private Loadout primaryWeapon;
+    @ManyToOne
+    private Loadout secondaryWeapon;
 }

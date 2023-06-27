@@ -19,4 +19,7 @@ public class Tool {
     private int bloodlineRank;
     private int price;
     private String type;
+    @ManyToOne
+    @JsonIgnore
+    private Loadout loadout;
 }

@@ -7,6 +7,7 @@ import lupe.companion.hunt.chaosLoadout.tools.Tool;
 import lupe.companion.hunt.chaosLoadout.weapons.Weapon;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -16,19 +17,19 @@ import java.util.Set;
 @NoArgsConstructor
 public class Loadout {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     @OneToMany
+    @JoinColumn(name = "primaryWeapon")
     private List<Weapon> primary;
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     @OneToMany
+    @JoinColumn(name = "secondaryWeapon")
     private List<Weapon> secondary;
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     @OneToMany
+    @JoinColumn(name = "tools_toolID", referencedColumnName = "ID")
     private Set<Tool> tools;
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     @OneToMany
+    @JoinColumn(name = "consumables_consumableID", referencedColumnName = "ID")
     private List<Consumable> consumables;
     private int totalPrice;
 }
