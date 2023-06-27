@@ -17,4 +17,10 @@ public class HelperFunctions {
         int flip = random.nextInt(1, 101);
         return flip >= 50;
     }
+
+    public boolean isSpecialAmmo() {
+        int flip = getRandomIndex(1, 101);
+        return flip >= 70;
+    }
+
 }

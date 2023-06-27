@@ -30,8 +30,4 @@ public class Weapon {
     )
     private Set<Ammunition> ammoSet;
     private int price;
-    @ManyToOne
-    private Loadout primaryWeapon;
-    @ManyToOne
-    private Loadout secondaryWeapon;
 }
