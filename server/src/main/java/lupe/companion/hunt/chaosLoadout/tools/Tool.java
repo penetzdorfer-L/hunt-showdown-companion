@@ -19,8 +19,4 @@ public class Tool {
     private int bloodlineRank;
     private int price;
     private String type;
-    @ManyToOne
-//    @JoinColumn(name = "loadouts_id")
-    @JoinColumn(name="loadouts_id", insertable = false, updatable = false)
-    private Loadout loadout;
 }

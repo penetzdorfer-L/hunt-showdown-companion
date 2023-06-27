@@ -28,8 +28,5 @@ public class Weapon {
             inverseJoinColumns = {@JoinColumn(name = "ammunitions_ammoID")}
     )
     private Set<Ammunition> ammoSet;
-    @ManyToOne
-    @JoinColumn(name = "loadouts_id", insertable = false, updatable = false)
-    private Loadout loadout;
     private int price;
 }

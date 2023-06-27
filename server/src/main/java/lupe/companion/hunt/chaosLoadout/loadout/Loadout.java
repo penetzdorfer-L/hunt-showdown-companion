@@ -20,19 +20,15 @@ public class Loadout {
     private long ID;
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     @OneToMany
-    @JoinColumn(name = "loadouts_id")
     private List<Weapon> primary;
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     @OneToMany
-    @JoinColumn(name = "loadouts_id")
     private List<Weapon> secondary;
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     @OneToMany
-    @JoinColumn(name = "loadouts_id")
     private Set<Tool> tools;
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     @OneToMany
-    @JoinColumn(name = "loadouts_id")
     private List<Consumable> consumables;
     private int totalPrice;
 }
