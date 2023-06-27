@@ -1,7 +1,10 @@
 package lupe.companion.hunt.chaosLoadout.weapons;
 
 import lombok.AllArgsConstructor;
+import lupe.companion.hunt.chaosLoadout.ammunitions.Ammunition;
 import lupe.companion.hunt.chaosLoadout.loadout.LoadoutRequest;
+import lupe.companion.hunt.chaosLoadout.loadout.data.RandomAmmo;
+import lupe.companion.hunt.chaosLoadout.loadout.data.RandomWeapon;
 import lupe.companion.hunt.logic.HelperFunctions;
 import org.springframework.stereotype.Service;
 
@@ -16,25 +19,53 @@ public class WeaponService {
     private final WeaponRepository weaponRepository;
     private final HelperFunctions helperFunctions;
 
-    public List<Weapon> getRandomPrimary(LoadoutRequest request) {
+    public List<RandomWeapon> getRandomPrimary(LoadoutRequest request) {
+        RandomWeapon randomWeapon = new RandomWeapon();
         List<Weapon> weaponsFiltered = weaponRepository.findWeaponsByBloodlineRankLessThanEqual(request.getBloodlineRank());
-        Weapon randomWeapon = weaponsFiltered.get(helperFunctions.getRandomIndex(0, weaponsFiltered.size()));
+        Weapon weapon = weaponsFiltered.get(helperFunctions.getRandomIndex(0, weaponsFiltered.size()));
+        initRandomWeapon(randomWeapon, weapon);
         if (randomWeapon.isDualwielable() && request.isDualWield()) {
             return flipForDualWield(randomWeapon);
         }
         return new ArrayList<>(List.of(randomWeapon));
     }
-    public List<Weapon> getRandomSecondary(LoadoutRequest request, int slotsUsed) {
+    private void initRandomWeapon(RandomWeapon randomWeapon, Weapon weapon) {
+        randomWeapon.setName(weapon.getName());
+        randomWeapon.setSlots(weapon.getSlots());
+        randomWeapon.setBloodlineRank(weapon.getBloodlineRank());
+        randomWeapon.setAmmoSlots(weapon.getAmmoSlots());
+        randomWeapon.setDualwielable(weapon.isDualwielable());
+        randomWeapon.setPrice(weapon.getPrice());
+//        convertAmmoToAvailableAmmo(randomWeapon, weapon);
+    }
+
+//    private void convertAmmoToAvailableAmmo(RandomWeapon randomWeapon, Weapon weapon) {
+//        Set<RandomAmmo> ammoSet = new HashSet<>();
+//        weapon.getAmmoSet().forEach(el -> createConversion(el, ammoSet));
+//        randomWeapon.setAmmoSet(ammoSet);
+//    }
+
+    private void createConversion(Ammunition el, Set<RandomAmmo> ammoSet) {
+        RandomAmmo ammo = new RandomAmmo();
+        ammo.setName(el.getName());
+        ammo.setPrice(el.getPrice());
+        ammo.setTypeOfAmmo(el.getTypeOfAmmo());
+        ammoSet.add(ammo);
+    }
+
+    public List<RandomWeapon> getRandomSecondary(LoadoutRequest request, int slotsUsed) {
         int slotsAvailable = getSlotsAvailable(request, slotsUsed);
+        RandomWeapon randomWeapon = new RandomWeapon();
         List<Weapon> weaponsFiltered = weaponRepository.findWeaponsByBloodlineRankLessThanEqualAndSlotsLessThanEqual(request.getBloodlineRank(), slotsAvailable);
-        Weapon randomWeapon = weaponsFiltered.get(helperFunctions.getRandomIndex(0, weaponsFiltered.size()));
+        Weapon weapon = weaponsFiltered.get(helperFunctions.getRandomIndex(0, weaponsFiltered.size()));
+        initRandomWeapon(randomWeapon, weapon);
         if (randomWeapon.isDualwielable() && request.isDualWield()) {
             return flipForDualWield(randomWeapon);
         }
         return new ArrayList<>(List.of(randomWeapon));
     }
 
-    private List<Weapon> flipForDualWield(Weapon randomWeapon) {
+    private List<RandomWeapon> flipForDualWield(RandomWeapon randomWeapon) {
         if (helperFunctions.isDualwield()) {
             return new ArrayList<>(List.of(randomWeapon, randomWeapon));
         }

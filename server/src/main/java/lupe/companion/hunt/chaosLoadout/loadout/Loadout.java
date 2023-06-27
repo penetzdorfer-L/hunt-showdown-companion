@@ -2,12 +2,12 @@ package lupe.companion.hunt.chaosLoadout.loadout;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lupe.companion.hunt.chaosLoadout.consumables.Consumable;
+import lupe.companion.hunt.chaosLoadout.loadout.data.RandomAmmo;
+import lupe.companion.hunt.chaosLoadout.loadout.data.RandomConsumable;
+import lupe.companion.hunt.chaosLoadout.loadout.data.RandomWeapon;
 import lupe.companion.hunt.chaosLoadout.tools.Tool;
-import lupe.companion.hunt.chaosLoadout.weapons.Weapon;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -19,17 +19,18 @@ public class Loadout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-    @OneToMany
-    @JoinColumn(name = "primaryWeapon")
-    private List<Weapon> primary;
-    @OneToMany
-    @JoinColumn(name = "secondaryWeapon")
-    private List<Weapon> secondary;
+    @ElementCollection(targetClass = RandomWeapon.class, fetch = FetchType.EAGER)
+    private List<RandomWeapon> primary;
+    @ElementCollection(targetClass = RandomWeapon.class, fetch = FetchType.EAGER)
+    private List<RandomWeapon> secondary;
     @OneToMany
     @JoinColumn(name = "tools_toolID", referencedColumnName = "ID")
     private Set<Tool> tools;
-    @OneToMany
-    @JoinColumn(name = "consumables_consumableID", referencedColumnName = "ID")
-    private List<Consumable> consumables;
+    @ElementCollection(targetClass = RandomConsumable.class, fetch = FetchType.EAGER)
+    private List<RandomConsumable> consumables;
+    @ElementCollection(targetClass = RandomAmmo.class, fetch = FetchType.EAGER)
+    private List<RandomAmmo> ammoForPrimary;
+    @ElementCollection(targetClass = RandomAmmo.class, fetch = FetchType.EAGER)
+    private List<RandomAmmo> ammoForSecondary;
     private int totalPrice;
 }
