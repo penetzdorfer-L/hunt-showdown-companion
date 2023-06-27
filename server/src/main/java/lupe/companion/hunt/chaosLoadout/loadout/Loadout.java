@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lupe.companion.hunt.chaosLoadout.consumables.Consumable;
 import lupe.companion.hunt.chaosLoadout.tools.Tool;
 import lupe.companion.hunt.chaosLoadout.weapons.Weapon;
@@ -13,12 +14,12 @@ import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "loadouts")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Loadout {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long ID;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     private List<Weapon> primary;
@@ -29,4 +30,5 @@ public class Loadout {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loadout")
     private List<Consumable> consumables;
     private int totalPrice;
+
 }

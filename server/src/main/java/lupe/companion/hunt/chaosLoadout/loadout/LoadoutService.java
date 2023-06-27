@@ -26,8 +26,19 @@ public class LoadoutService {
         Set<Tool> tools = toolService.getRandomTools(request);
         List<Consumable> consumables = consumableService.getRandomConsumables(request);
         int totalPrice = calculatePrice(primary, secondary, tools, consumables);
-        return new Loadout(1,primary,secondary,tools,consumables,totalPrice);
+        return constructLoadout(primary, secondary, tools, consumables, totalPrice);
     }
+
+    private Loadout constructLoadout(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables, int totalPrice) {
+        Loadout randomLoadout = new Loadout();
+        randomLoadout.setPrimary(primary);
+        randomLoadout.setSecondary(secondary);
+        randomLoadout.setTools(tools);
+        randomLoadout.setConsumables(consumables);
+        randomLoadout.setTotalPrice(totalPrice);
+        return randomLoadout;
+    }
+
     private int calculatePrice(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables) {
         int primaryValue = primary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);
         int secondaryValue = secondary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);

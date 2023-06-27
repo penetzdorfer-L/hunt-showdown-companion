@@ -1,5 +1,7 @@
 package lupe.companion.hunt.chaosLoadout.loadout;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +22,28 @@ public class LoadoutController {
     @GetMapping(path = "/filter-most-rolled")
     @ResponseStatus(HttpStatus.OK)
     public List<Loadout> filterByMostRolled() {
-        return loadoutRepository.findDistinctFirstByPrimary();
+        return loadoutRepository.findAll();
     }
-    @PutMapping(path = "/generate")
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(path = "/")
+    @ResponseStatus(HttpStatus.CREATED)
     public Loadout generateLoadout(
-            @RequestBody LoadoutRequest loadoutRequest
+            @RequestBody String json
     ) {
-        Loadout generateLoadout = loadoutService.generateLoadout(loadoutRequest);
-        loadoutRepository.save(generateLoadout);
-        return generateLoadout;
+        try {
+            System.out.println(json);
+            ObjectMapper objectMapper = new ObjectMapper();
+            LoadoutRequest loadoutRequest = objectMapper.readValue(json, LoadoutRequest.class);
+            Loadout generateLoadout = loadoutService.generateLoadout(loadoutRequest);
+            loadoutRepository.save(generateLoadout);
+            return generateLoadout;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @DeleteMapping(path = "/deleteAll")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteLoadouts() {
+        loadoutRepository.deleteAll();
+        return "Deleted all Loadouts!";
     }
 }

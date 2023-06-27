@@ -17,7 +17,7 @@ public class ConsumableService {
         List<Consumable> randomConsumables = new ArrayList<>();
         List<Consumable> consumableList = consumableRepository.findConsumableByBloodlineRankLessThanEqual(request.getBloodlineRank());
         while (!(randomConsumables.size() == 4)) {
-            Consumable consumable = consumableList.get(helperFunctions.getRandomIndex(0, consumableList.size() + 1));
+            Consumable consumable = consumableList.get(helperFunctions.getRandomIndex(0, consumableList.size()));
             randomConsumables.add(consumable);
         }
         return randomConsumables;

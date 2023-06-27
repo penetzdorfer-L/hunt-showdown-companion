@@ -8,13 +8,13 @@ import java.util.Random;
 @Service
 @AllArgsConstructor
 public class HelperFunctions {
-    private final Random random;
+    private final Random random = new Random();
 
     public int getRandomIndex(int origin, int boundPlusOne) {
         return random.nextInt(origin, boundPlusOne);
     }
     public boolean isDualwield() {
-        int flip = random.nextInt(0, 101);
-        return flip >= 80;
+        int flip = random.nextInt(1, 101);
+        return flip >= 50;
     }
 }

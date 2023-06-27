@@ -25,7 +25,7 @@ public class ToolService {
 
     private void addToolsToList(Set<Tool> randomTools, List<Tool> toolList) {
         while (!(randomTools.size() == 4)) {
-            Tool tool = toolList.get(helperFunctions.getRandomIndex(0, toolList.size() + 1));
+            Tool tool = toolList.get(helperFunctions.getRandomIndex(0, toolList.size()));
             randomTools.add(tool); //is this better than checking for conditions?
         }
     }
@@ -36,7 +36,7 @@ public class ToolService {
         }
         if (request.isForceMelee()) {
             List<Tool> toolList = toolRepository.findToolsByTypeIsIgnoreCase("melee");
-            Tool tool = toolList.get(helperFunctions.getRandomIndex(0, toolList.size() + 1));
+            Tool tool = toolList.get(helperFunctions.getRandomIndex(0, toolList.size()));
             randomTools.add(tool);
         }
     }
