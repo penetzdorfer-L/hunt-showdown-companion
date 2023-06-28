@@ -4,6 +4,7 @@ import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lupe.companion.hunt.chaosLoadout.PriceAble;
 
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class RandomWeapon {
+public class RandomWeapon implements PriceAble {
     private String name;
     private int slots;
     private int bloodlineRank;

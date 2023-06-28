@@ -83,4 +83,24 @@ public class WeaponService {
         slotsAvailable = noQuarterMaster - slotsUsed;
         return slotsAvailable;
     }
+
+    public Set<RandomAmmo> filterOutAmmo(List<RandomWeapon> primary) {
+        RandomWeapon randomWeapon = primary.stream().findFirst().get();
+        Weapon weapon = weaponRepository.findWeaponByNameEqualsIgnoreCase(randomWeapon.getName());
+        return weapon.getAmmoSet().isEmpty() ? new HashSet<>() : convertAmmo(weapon.getAmmoSet());
+    }
+
+    private Set<RandomAmmo> convertAmmo(Set<Ammunition> weapon) {
+        Set<RandomAmmo> ammoSet = new HashSet<>();
+        weapon.forEach(el -> initRandomAmmo(el, ammoSet));
+        return ammoSet;
+    }
+
+    private void initRandomAmmo(Ammunition el, Set<RandomAmmo> ammoSet) {
+        RandomAmmo randomAmmo = new RandomAmmo();
+        randomAmmo.setName(el.getName());
+        randomAmmo.setPrice(el.getPrice());
+        randomAmmo.setTypeOfAmmo(el.getTypeOfAmmo());
+        ammoSet.add(randomAmmo);
+    }
 }

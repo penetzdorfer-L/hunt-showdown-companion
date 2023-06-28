@@ -1,9 +1,9 @@
 package lupe.companion.hunt.chaosLoadout.loadout;
 
 import lombok.AllArgsConstructor;
+import lupe.companion.hunt.chaosLoadout.PriceAble;
 import lupe.companion.hunt.chaosLoadout.ammunitions.AmmunitionService;
 import lupe.companion.hunt.chaosLoadout.consumables.ConsumableService;
-import lupe.companion.hunt.chaosLoadout.loadout.data.LoadOutItem;
 import lupe.companion.hunt.chaosLoadout.loadout.data.RandomAmmo;
 import lupe.companion.hunt.chaosLoadout.loadout.data.RandomConsumable;
 import lupe.companion.hunt.chaosLoadout.loadout.data.RandomWeapon;
@@ -12,9 +12,7 @@ import lupe.companion.hunt.chaosLoadout.tools.ToolService;
 import lupe.companion.hunt.chaosLoadout.weapons.WeaponService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -30,9 +28,11 @@ public class LoadoutService {
         List<RandomWeapon> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
         Set<Tool> tools = toolService.getRandomTools(request);
         List<RandomConsumable> consumables = consumableService.getRandomConsumables(request);
+//        Set<RandomAmmo> primaryAvailableAmmo = weaponService.filterOutAmmo(primary);
+//        Set<RandomAmmo> secondaryAvailableAmmo = weaponService.filterOutAmmo(secondary);
         List<RandomAmmo> primaryAmmo = ammunitionService.getRandomAmmo(primary, request);
         List<RandomAmmo> secondaryAmmo = ammunitionService.getRandomAmmo(secondary ,request);
-        int totalPrice = calculatePrice(primary, secondary, tools, consumables, primaryAmmo, secondaryAmmo);
+        int totalPrice = getTotalPrice(primary, secondary, tools, consumables, primaryAmmo, secondaryAmmo);
         return constructLoadout(primary, secondary, tools, consumables, totalPrice, primaryAmmo, secondaryAmmo);
     }
 
@@ -48,14 +48,20 @@ public class LoadoutService {
         return randomLoadout;
     }
 
-    private int calculatePrice(List<RandomWeapon> primary, List<RandomWeapon> secondary, Set<Tool> tools, List<RandomConsumable> consumables, List<RandomAmmo> primaryAmmo, List<RandomAmmo> secondaryAmmo) {
-        int primaryValue = streamPrices(primary);
-        int secondaryValue = streamPrices(secondary);
-        int toolsValue = tools.stream().reduce(0, (currentPrice, tool) -> currentPrice + tool.getPrice(), Integer::sum);
-        int consumablesValue = consumables.stream().reduce(0, (currentPrice, consumable) -> currentPrice + consumable.getPrice(), Integer::sum);
-        int primaryAmmoValue = primaryAmmo.stream().reduce(0, (currentPrice, ammo) -> currentPrice + ammo.getPrice(), Integer::sum);
-        int secondaryAmmoValue = secondaryAmmo.stream().reduce(0, (currentPrice, ammo) -> currentPrice + ammo.getPrice(), Integer::sum);
-        return primaryValue + secondaryValue + toolsValue + consumablesValue + primaryAmmoValue + secondaryAmmoValue;
+    private int getTotalPrice(List<RandomWeapon> primary, List<RandomWeapon> secondary, Set<Tool> tools, List<RandomConsumable> consumables, List<RandomAmmo> primaryAmmo, List<RandomAmmo> secondaryAmmo) {
+        List<PriceAble> priceAbles = convertToPriceAble(primary, secondary, tools.stream().toList(), consumables, primaryAmmo, secondaryAmmo);
+        return priceAbles.stream().reduce(0, (currentValue, item) -> currentValue + item.getPrice(), Integer::sum);
+    }
+
+    private List<PriceAble> convertToPriceAble(List<RandomWeapon> primary, List<RandomWeapon> secondary, List<Tool> list, List<RandomConsumable> consumables, List<RandomAmmo> primaryAmmo, List<RandomAmmo> secondaryAmmo) {
+        List<PriceAble> priceAbles = new ArrayList<>();
+        priceAbles.add((PriceAble) primary);
+        priceAbles.add((PriceAble) secondary);
+        priceAbles.add((PriceAble) list);
+        priceAbles.add((PriceAble) consumables);
+        priceAbles.add((PriceAble) primaryAmmo);
+        priceAbles.add((PriceAble) secondaryAmmo);
+        return priceAbles;
     }
 
     //TODO: make Wildcard method that takes every line from calculatePrice
