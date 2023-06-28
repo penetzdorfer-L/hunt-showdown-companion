@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lupe.companion.hunt.chaosLoadout.PriceAble;
 import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
 
 @Entity
@@ -12,7 +13,7 @@ import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "consumables")
-public class Consumable {
+public class Consumable implements PriceAble {
     @Id
     private String consumableID;
     private String name;

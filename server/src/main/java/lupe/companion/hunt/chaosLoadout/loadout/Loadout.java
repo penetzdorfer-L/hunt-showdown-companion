@@ -19,16 +19,16 @@ public class Loadout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "primaryWeapon")
     private List<Weapon> primary;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "secondaryWeapon")
     private List<Weapon> secondary;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "tools_toolID", referencedColumnName = "ID")
     private Set<Tool> tools;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "consumables_consumableID", referencedColumnName = "ID")
     private List<Consumable> consumables;
     private int totalPrice;

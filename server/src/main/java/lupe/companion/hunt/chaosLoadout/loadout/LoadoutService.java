@@ -1,6 +1,7 @@
 package lupe.companion.hunt.chaosLoadout.loadout;
 
 import lombok.AllArgsConstructor;
+import lupe.companion.hunt.chaosLoadout.PriceAble;
 import lupe.companion.hunt.chaosLoadout.consumables.Consumable;
 import lupe.companion.hunt.chaosLoadout.consumables.ConsumableService;
 import lupe.companion.hunt.chaosLoadout.tools.Tool;
@@ -9,6 +10,7 @@ import lupe.companion.hunt.chaosLoadout.weapons.Weapon;
 import lupe.companion.hunt.chaosLoadout.weapons.WeaponService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +27,7 @@ public class LoadoutService {
         List<Weapon> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
         Set<Tool> tools = toolService.getRandomTools(request);
         List<Consumable> consumables = consumableService.getRandomConsumables(request);
-        int totalPrice = calculatePrice(primary, secondary, tools, consumables);
+        int totalPrice = getTotalPrice(primary, secondary, tools, consumables);
         return constructLoadout(primary, secondary, tools, consumables, totalPrice);
     }
 
@@ -38,13 +40,17 @@ public class LoadoutService {
         randomLoadout.setTotalPrice(totalPrice);
         return randomLoadout;
     }
-
-    private int calculatePrice(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables) {
-        int primaryValue = primary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);
-        int secondaryValue = secondary.stream().reduce(0, (currentPrice, weapon) -> currentPrice + weapon.getPrice(), Integer::sum);
-        int toolsValue = tools.stream().reduce(0, (currentPrice, tool) -> currentPrice + tool.getPrice(), Integer::sum);
-        int consumablesValue = consumables.stream().reduce(0, (currentPrice, consumable) -> currentPrice + consumable.getPrice(), Integer::sum);
-        return primaryValue + secondaryValue + toolsValue + consumablesValue;
+    private int getTotalPrice(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables) {
+        List<PriceAble> items = getPriceAbleList(primary, secondary, tools.stream().toList(), consumables);
+        return items.stream().reduce(0, (currentPrice, item) -> currentPrice + item.getPrice(), Integer::sum);
+    }
+    private List<PriceAble> getPriceAbleList(List<Weapon> primary, List<Weapon> secondary, List<Tool> toollist, List<Consumable> consumables) {
+        List<PriceAble> items = new ArrayList<>();
+        items.addAll(primary);
+        items.addAll(secondary);
+        items.addAll(toollist);
+        items.addAll(consumables);
+        return items;
     }
     private Integer getSlotsAfterPrimary(List<Weapon> primary) {
         return primary.stream()

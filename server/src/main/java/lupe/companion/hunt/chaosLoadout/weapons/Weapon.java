@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lupe.companion.hunt.chaosLoadout.PriceAble;
 import lupe.companion.hunt.chaosLoadout.ammunitions.Ammunition;
 import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
 
@@ -15,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "weapons")
-public class Weapon {
+public class Weapon implements PriceAble {
     @Id
     private String weaponID;
     private String name;

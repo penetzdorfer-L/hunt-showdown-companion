@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lupe.companion.hunt.chaosLoadout.PriceAble;
 import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
 
 @Entity
@@ -12,7 +13,7 @@ import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tools")
-public class Tool {
+public class Tool implements PriceAble {
     @Id
     private String toolID;
     private String name;
