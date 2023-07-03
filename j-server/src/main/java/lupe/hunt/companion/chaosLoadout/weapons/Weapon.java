@@ -18,10 +18,8 @@ import java.util.Set;
 @Embeddable
 public class Weapon implements PriceAble {
     @Id
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private String weaponID;
     private String name;
     private int slots;
@@ -30,8 +28,8 @@ public class Weapon implements PriceAble {
     private boolean dualwieldable;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "weapons_ammunition_connection",
-            joinColumns = {@JoinColumn(name = "weapons_weaponID")},
-            inverseJoinColumns = {@JoinColumn(name = "ammunitions_ammoID")}
+            joinColumns = {@JoinColumn(name = "weapons_weaponID", referencedColumnName = "weaponID")},
+            inverseJoinColumns = {@JoinColumn(name = "ammunitions_ammoID", referencedColumnName = "ammoID")}
     )
     private Set<Ammunition> ammoSet;
     private int price;

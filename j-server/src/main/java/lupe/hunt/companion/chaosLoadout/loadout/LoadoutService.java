@@ -23,6 +23,7 @@ public class LoadoutService {
     private final ToolService toolService;
     private final ConsumableService consumableService;
     private final AmmunitionService ammunitionService;
+
     public Loadout generateLoadout(LoadoutRequest request) {
         List<Weapon> primary = weaponService.getRandomPrimary(request);
         List<Weapon> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
@@ -67,5 +68,15 @@ public class LoadoutService {
     private Integer getSlotsAfterPrimary(List<Weapon> primary) {
         return primary.stream()
                 .reduce(0, (accumulator, weapon) -> accumulator + weapon.getSlots(), Integer::sum);
+    }
+    public Loadout testDuplicate() {
+        Loadout loadout = new Loadout();
+        loadout.setPrimary(new ArrayList<>());
+        loadout.setSecondary(new ArrayList<>());
+        loadout.setTools(new HashSet<>());
+        loadout.setConsumables(consumableService.generateDuplicates());
+        loadout.setAmmoForPrimary(new ArrayList<>());
+        loadout.setAmmoForSecondary(new ArrayList<>());
+        return loadout;
     }
 }

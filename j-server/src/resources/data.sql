@@ -413,7 +413,7 @@ VALUES ('knife', 1, 'Knife
 INSERT INTO public.tools (toolid, bloodline_rank, name, price, type)
 VALUES ('heavy_knife', 1, 'Heavy Knife
 ', 20, 'Melee');
-/*
+
 INSERT INTO public.weapons_ammunition_connection (weapons_weaponid, ammunitions_ammoid)
 VALUES ('nagant_m1895', 'compact');
 INSERT INTO public.weapons_ammunition_connection (weapons_weaponid, ammunitions_ammoid)
@@ -1120,4 +1120,4 @@ INSERT INTO public.weapons_ammunition_connection (weapons_weaponid, ammunitions_
 VALUES ('nitro_express_rifle', 'SHREDDER_nitro');
 INSERT INTO public.weapons_ammunition_connection (weapons_weaponid, ammunitions_ammoid)
 VALUES ('nitro_express_rifle', 'EXPLO_nitro');
-  */
+

@@ -11,6 +11,8 @@ import lupe.hunt.companion.chaosLoadout.PriceAble;
 @NoArgsConstructor
 @Embeddable
 public class RandomConsumable implements PriceAble {
+    private long id;
+    private String consumableID;
     private String name;
     private int bloodlineRank;
     private int price;

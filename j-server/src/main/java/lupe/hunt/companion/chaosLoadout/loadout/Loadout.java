@@ -1,11 +1,13 @@
 package lupe.hunt.companion.chaosLoadout.loadout;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lupe.hunt.companion.chaosLoadout.ammunitions.Ammunition;
 import lupe.hunt.companion.chaosLoadout.consumables.Consumable;
+import lupe.hunt.companion.chaosLoadout.loadout.data.RandomConsumable;
 import lupe.hunt.companion.chaosLoadout.tools.Tool;
 import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
 
@@ -32,9 +34,9 @@ public class Loadout {
     @OneToMany
     @JoinColumn(name = "tools_toolID", referencedColumnName = "ID")
     private Set<Tool> tools;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "consumables_loadout")
-//    @ElementCollection(targetClass = Consumable.class, fetch = FetchType.EAGER)
+//    @ElementCollection(targetClass = RandomConsumable.class, fetch = FetchType.EAGER)
     private List<Consumable> consumables;
     @OneToMany
     @JoinColumn(name = "ammunitions_primary")
