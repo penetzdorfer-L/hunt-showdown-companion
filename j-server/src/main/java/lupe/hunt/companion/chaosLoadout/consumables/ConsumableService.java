@@ -1,9 +1,9 @@
 package lupe.hunt.companion.chaosLoadout.consumables;
 
 import lombok.AllArgsConstructor;
-import lupe.companion.hunt.chaosLoadout.loadout.LoadoutRequest;
-import lupe.companion.hunt.chaosLoadout.loadout.data.RandomConsumable;
-import lupe.companion.hunt.logic.HelperFunctions;
+import lupe.hunt.companion.chaosLoadout.loadout.LoadoutRequest;
+import lupe.hunt.companion.chaosLoadout.loadout.data.RandomConsumable;
+import lupe.hunt.companion.logic.HelperFunctions;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

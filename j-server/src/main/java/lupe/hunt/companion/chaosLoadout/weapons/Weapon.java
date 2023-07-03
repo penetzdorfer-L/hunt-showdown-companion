@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lupe.companion.hunt.chaosLoadout.PriceAble;
-import lupe.companion.hunt.chaosLoadout.ammunitions.Ammunition;
-import lupe.companion.hunt.chaosLoadout.loadout.Loadout;
+import lupe.hunt.companion.chaosLoadout.PriceAble;
+import lupe.hunt.companion.chaosLoadout.ammunitions.Ammunition;
+import lupe.hunt.companion.chaosLoadout.loadout.Loadout;
 
 import java.util.Set;
 

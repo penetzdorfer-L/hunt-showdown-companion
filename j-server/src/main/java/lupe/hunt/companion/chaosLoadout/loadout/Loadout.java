@@ -1,11 +1,13 @@
 package lupe.hunt.companion.chaosLoadout.loadout;
 
 import jakarta.persistence.*;
-import lombok.*;
-import lupe.companion.hunt.chaosLoadout.loadout.data.RandomAmmo;
-import lupe.companion.hunt.chaosLoadout.loadout.data.RandomConsumable;
-import lupe.companion.hunt.chaosLoadout.loadout.data.RandomWeapon;
-import lupe.companion.hunt.chaosLoadout.tools.Tool;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lupe.hunt.companion.chaosLoadout.loadout.data.RandomAmmo;
+import lupe.hunt.companion.chaosLoadout.loadout.data.RandomConsumable;
+import lupe.hunt.companion.chaosLoadout.loadout.data.RandomWeapon;
+import lupe.hunt.companion.chaosLoadout.tools.Tool;
 
 import java.util.List;
 import java.util.Set;

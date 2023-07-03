@@ -1,8 +1,8 @@
 package lupe.hunt.companion.chaosLoadout.tools;
 
 import lombok.AllArgsConstructor;
-import lupe.companion.hunt.chaosLoadout.loadout.LoadoutRequest;
-import lupe.companion.hunt.logic.HelperFunctions;
+import lupe.hunt.companion.chaosLoadout.loadout.LoadoutRequest;
+import lupe.hunt.companion.logic.HelperFunctions;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;

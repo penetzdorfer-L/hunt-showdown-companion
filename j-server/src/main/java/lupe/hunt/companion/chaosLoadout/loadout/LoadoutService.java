@@ -1,15 +1,15 @@
 package lupe.hunt.companion.chaosLoadout.loadout;
 
 import lombok.AllArgsConstructor;
-import lupe.companion.hunt.chaosLoadout.PriceAble;
-import lupe.companion.hunt.chaosLoadout.ammunitions.AmmunitionService;
-import lupe.companion.hunt.chaosLoadout.consumables.ConsumableService;
-import lupe.companion.hunt.chaosLoadout.loadout.data.RandomAmmo;
-import lupe.companion.hunt.chaosLoadout.loadout.data.RandomConsumable;
-import lupe.companion.hunt.chaosLoadout.loadout.data.RandomWeapon;
-import lupe.companion.hunt.chaosLoadout.tools.Tool;
-import lupe.companion.hunt.chaosLoadout.tools.ToolService;
-import lupe.companion.hunt.chaosLoadout.weapons.WeaponService;
+import lupe.hunt.companion.chaosLoadout.PriceAble;
+import lupe.hunt.companion.chaosLoadout.ammunitions.AmmunitionService;
+import lupe.hunt.companion.chaosLoadout.consumables.ConsumableService;
+import lupe.hunt.companion.chaosLoadout.loadout.data.RandomAmmo;
+import lupe.hunt.companion.chaosLoadout.loadout.data.RandomConsumable;
+import lupe.hunt.companion.chaosLoadout.loadout.data.RandomWeapon;
+import lupe.hunt.companion.chaosLoadout.tools.Tool;
+import lupe.hunt.companion.chaosLoadout.tools.ToolService;
+import lupe.hunt.companion.chaosLoadout.weapons.WeaponService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
