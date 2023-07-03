@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lupe.hunt.companion.chaosLoadout.ammunitions.Ammunition;
 import lupe.hunt.companion.chaosLoadout.consumables.Consumable;
-import lupe.hunt.companion.chaosLoadout.loadout.data.RandomAmmo;
-import lupe.hunt.companion.chaosLoadout.loadout.data.RandomConsumable;
-import lupe.hunt.companion.chaosLoadout.loadout.data.RandomWeapon;
 import lupe.hunt.companion.chaosLoadout.tools.Tool;
 import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
 

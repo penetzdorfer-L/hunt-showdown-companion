@@ -1,17 +1,12 @@
 package lupe.hunt.companion.chaosLoadout.weapons;
 
 import lombok.AllArgsConstructor;
-import lupe.hunt.companion.chaosLoadout.ammunitions.Ammunition;
 import lupe.hunt.companion.chaosLoadout.loadout.LoadoutRequest;
-import lupe.hunt.companion.chaosLoadout.loadout.data.RandomAmmo;
-import lupe.hunt.companion.chaosLoadout.loadout.data.RandomWeapon;
 import lupe.hunt.companion.logic.HelperFunctions;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor

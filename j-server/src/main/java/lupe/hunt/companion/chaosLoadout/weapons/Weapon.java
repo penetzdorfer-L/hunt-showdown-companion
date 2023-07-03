@@ -1,6 +1,5 @@
 package lupe.hunt.companion.chaosLoadout.weapons;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +18,10 @@ import java.util.Set;
 @Embeddable
 public class Weapon implements PriceAble {
     @Id
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private String weaponID;
     private String name;
     private int slots;

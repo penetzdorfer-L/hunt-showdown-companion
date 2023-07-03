@@ -5,7 +5,6 @@ import lupe.hunt.companion.chaosLoadout.loadout.LoadoutRequest;
 import lupe.hunt.companion.chaosLoadout.loadout.data.RandomAmmo;
 import lupe.hunt.companion.chaosLoadout.loadout.data.RandomWeapon;
 import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
-import lupe.hunt.companion.chaosLoadout.weapons.WeaponService;
 import lupe.hunt.companion.logic.HelperFunctions;
 import org.springframework.stereotype.Service;
 
