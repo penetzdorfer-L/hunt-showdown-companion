@@ -14,22 +14,13 @@ import java.util.List;
 public class ConsumableService {
     private final ConsumableRepository consumableRepository;
     private final HelperFunctions helperFunctions;
-    public List<RandomConsumable> getRandomConsumables(LoadoutRequest request) {
-        List<RandomConsumable> randomConsumables = new ArrayList<>();
+    public List<Consumable> getRandomConsumables(LoadoutRequest request) {
+        List<Consumable> randomConsumables = new ArrayList<>();
         List<Consumable> consumableList = consumableRepository.findConsumableByBloodlineRankLessThanEqual(request.getBloodlineRank());
         while (!(randomConsumables.size() == 4)) {
             Consumable consumable = consumableList.get(helperFunctions.getRandomIndex(0, consumableList.size()));
-            initRandomConsumable(randomConsumables, consumable);
+            consumableList.add(consumable);
         }
         return randomConsumables;
-    }
-
-    private void initRandomConsumable(List<RandomConsumable> consumableList, Consumable consumable) {
-        RandomConsumable randomConsumable = new RandomConsumable();
-        randomConsumable.setName(consumable.getName());
-        randomConsumable.setBloodlineRank(consumable.getBloodlineRank());
-        randomConsumable.setPrice(consumable.getPrice());
-        randomConsumable.setType(consumable.getType());
-        consumableList.add(randomConsumable);
     }
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lupe.hunt.companion.chaosLoadout.loadout.LoadoutRequest;
 import lupe.hunt.companion.chaosLoadout.loadout.data.RandomAmmo;
 import lupe.hunt.companion.chaosLoadout.loadout.data.RandomWeapon;
+import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
+import lupe.hunt.companion.chaosLoadout.weapons.WeaponService;
 import lupe.hunt.companion.logic.HelperFunctions;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class AmmunitionService {
     private final AmmunitionRepository ammunitionRepository;
     private final HelperFunctions helperFunctions;
-    public List<RandomAmmo> getRandomAmmo(List<RandomWeapon> weaponList, LoadoutRequest request) {
+    public List<Ammunition> getRandomAmmo(List<Weapon> weaponList, LoadoutRequest request) {
         return new ArrayList<>();
         //TODO: work with repository weapon to get desired lists
 //        List<RandomAmmo> randomAmmos = new ArrayList<>();
