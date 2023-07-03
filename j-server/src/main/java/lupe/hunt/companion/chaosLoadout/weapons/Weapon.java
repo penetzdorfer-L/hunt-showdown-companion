@@ -31,4 +31,8 @@ public class Weapon implements PriceAble {
     )
     private Set<Ammunition> ammoSet;
     private int price;
+    @ManyToOne
+    private Loadout primary;
+    @ManyToOne
+    private Loadout secondary;
 }

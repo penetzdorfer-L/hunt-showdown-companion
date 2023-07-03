@@ -24,18 +24,23 @@ public class Loadout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-    @ElementCollection(targetClass = RandomWeapon.class, fetch = FetchType.EAGER)
+//    @ElementCollection(targetClass = RandomWeapon.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "primary")
     private List<Weapon> primary;
-    @ElementCollection(targetClass = RandomWeapon.class, fetch = FetchType.EAGER)
+//    @ElementCollection(targetClass = RandomWeapon.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "secondary")
     private List<Weapon> secondary;
     @OneToMany
     @JoinColumn(name = "tools_toolID", referencedColumnName = "ID")
     private Set<Tool> tools;
-    @ElementCollection(targetClass = RandomConsumable.class, fetch = FetchType.EAGER)
+//    @ElementCollection(targetClass = RandomConsumable.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "loadout")
     private List<Consumable> consumables;
-    @ElementCollection(targetClass = RandomAmmo.class, fetch = FetchType.EAGER)
+//    @ElementCollection(targetClass = RandomAmmo.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "primary")
     private List<Ammunition> ammoForPrimary;
-    @ElementCollection(targetClass = RandomAmmo.class, fetch = FetchType.EAGER)
+//    @ElementCollection(targetClass = RandomAmmo.class, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "secondary")
     private List<Ammunition> ammoForSecondary;
     private int totalPrice;
 }

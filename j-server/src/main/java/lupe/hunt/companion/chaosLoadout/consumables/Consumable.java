@@ -20,4 +20,6 @@ public class Consumable implements PriceAble {
     private int bloodlineRank;
     private int price;
     private String type;
+    @ManyToOne
+    private Loadout loadout;
 }

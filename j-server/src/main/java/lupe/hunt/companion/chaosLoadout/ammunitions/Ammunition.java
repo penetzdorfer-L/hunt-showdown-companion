@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lupe.hunt.companion.chaosLoadout.PriceAble;
+import lupe.hunt.companion.chaosLoadout.loadout.Loadout;
 import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
 
 import java.util.List;
@@ -24,4 +25,8 @@ public class Ammunition implements PriceAble {
     @JsonIgnore
     private List<Weapon> availableFor;
     private int price;
+    @ManyToOne
+    private Loadout primary;
+    @ManyToOne
+    private Loadout secondary;
 }
