@@ -59,7 +59,7 @@ public class WeaponService {
         List<Weapon> weaponsFiltered = weaponRepository.findWeaponsByBloodlineRankLessThanEqualAndSlotsLessThanEqual(request.getBloodlineRank(), slotsAvailable);
         Weapon weapon = weaponsFiltered.get(helperFunctions.getRandomIndex(0, weaponsFiltered.size()));
         initRandomWeapon(randomWeapon, weapon);
-        if (randomWeapon.isDualwielable() && request.isDualWield()) {
+        if (randomWeapon.isDualwielable() && request.isDualWield() && slotsAvailable >= 2) {
             return flipForDualWield(randomWeapon);
         }
         return new ArrayList<>(List.of(randomWeapon));

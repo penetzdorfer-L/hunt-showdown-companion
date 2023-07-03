@@ -23,6 +23,7 @@ public class LoadoutService {
     private final ToolService toolService;
     private final ConsumableService consumableService;
     private final AmmunitionService ammunitionService;
+
     public Loadout generateLoadout(LoadoutRequest request) {
         List<RandomWeapon> primary = weaponService.getRandomPrimary(request);
         List<RandomWeapon> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
@@ -31,7 +32,7 @@ public class LoadoutService {
 //        Set<RandomAmmo> primaryAvailableAmmo = weaponService.filterOutAmmo(primary);
 //        Set<RandomAmmo> secondaryAvailableAmmo = weaponService.filterOutAmmo(secondary);
         List<RandomAmmo> primaryAmmo = ammunitionService.getRandomAmmo(primary, request);
-        List<RandomAmmo> secondaryAmmo = ammunitionService.getRandomAmmo(secondary ,request);
+        List<RandomAmmo> secondaryAmmo = ammunitionService.getRandomAmmo(secondary, request);
         int totalPrice = getTotalPrice(primary, secondary, tools, consumables, primaryAmmo, secondaryAmmo);
         return constructLoadout(primary, secondary, tools, consumables, totalPrice, primaryAmmo, secondaryAmmo);
     }
@@ -53,21 +54,17 @@ public class LoadoutService {
         return priceAbles.stream().reduce(0, (currentValue, item) -> currentValue + item.getPrice(), Integer::sum);
     }
 
-    private List<PriceAble> convertToPriceAble(List<RandomWeapon> primary, List<RandomWeapon> secondary, List<Tool> list, List<RandomConsumable> consumables, List<RandomAmmo> primaryAmmo, List<RandomAmmo> secondaryAmmo) {
+    private List<PriceAble> convertToPriceAble(List<RandomWeapon> primary, List<RandomWeapon> secondary, List<Tool> tools, List<RandomConsumable> consumables, List<RandomAmmo> primaryAmmo, List<RandomAmmo> secondaryAmmo) {
         List<PriceAble> priceAbles = new ArrayList<>();
-        priceAbles.add((PriceAble) primary);
-        priceAbles.add((PriceAble) secondary);
-        priceAbles.add((PriceAble) list);
-        priceAbles.add((PriceAble) consumables);
-        priceAbles.add((PriceAble) primaryAmmo);
-        priceAbles.add((PriceAble) secondaryAmmo);
+        primary.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        secondary.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        tools.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        consumables.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        primaryAmmo.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        secondaryAmmo.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
         return priceAbles;
     }
 
-    //TODO: make Wildcard method that takes every line from calculatePrice
-    private int streamPrices(List<RandomWeapon> lists) {
-        return lists.stream().reduce(0, (currentPrice, item) -> currentPrice + item.getPrice(), Integer::sum);
-    }
     private Integer getSlotsAfterPrimary(List<RandomWeapon> primary) {
         return primary.stream()
                 .reduce(0, (accumulator, weapon) -> accumulator + weapon.getSlots(), Integer::sum);
