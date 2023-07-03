@@ -14,11 +14,10 @@ import java.util.List;
 public class LoadoutController {
     private final LoadoutService loadoutService;
     private final LoadoutRepository loadoutRepository;
-    private final EntityManager entityManager;
     @GetMapping(path = "/")
     @ResponseStatus(HttpStatus.OK)
     public List<Loadout> getAllLoadouts() {
-        return loadoutRepository.findFirstByID(1);
+        return loadoutRepository.findAll();
     }
     @GetMapping(path = "/filter-most-rolled")
     @ResponseStatus(HttpStatus.OK)
