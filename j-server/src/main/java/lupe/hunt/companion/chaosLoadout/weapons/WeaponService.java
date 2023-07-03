@@ -39,7 +39,10 @@ public class WeaponService {
 
     private List<Weapon> flipForDualWield(Weapon weapon) {
         if (helperFunctions.isDualwield()) {
-            return new ArrayList<>(List.of(weapon, weapon));
+            List<Weapon> weaponList = new ArrayList<>();
+            weaponList.add(weapon);
+            weaponList.add(weapon);
+            return weaponList;
         }
         return new ArrayList<>(List.of(weapon));
     }

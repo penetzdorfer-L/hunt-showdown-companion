@@ -13,6 +13,7 @@ import lupe.hunt.companion.chaosLoadout.loadout.Loadout;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "consumables")
+@Embeddable
 public class Consumable implements PriceAble {
     @Id
     private String consumableID;

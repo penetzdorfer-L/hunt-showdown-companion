@@ -24,23 +24,28 @@ public class Loadout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-//    @ElementCollection(targetClass = RandomWeapon.class, fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "primary")
+    @OneToMany
+    @JoinColumn(name = "weapons_primary")
+//    @ElementCollection(targetClass = Weapon.class, fetch = FetchType.EAGER)
     private List<Weapon> primary;
-//    @ElementCollection(targetClass = RandomWeapon.class, fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "secondary")
+    @OneToMany
+    @JoinColumn(name = "weapons_secondary")
+//    @ElementCollection(targetClass = Weapon.class, fetch = FetchType.EAGER)
     private List<Weapon> secondary;
     @OneToMany
     @JoinColumn(name = "tools_toolID", referencedColumnName = "ID")
     private Set<Tool> tools;
-//    @ElementCollection(targetClass = RandomConsumable.class, fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "loadout")
+    @OneToMany
+    @JoinColumn(name = "consumables_loadout")
+//    @ElementCollection(targetClass = Consumable.class, fetch = FetchType.EAGER)
     private List<Consumable> consumables;
-//    @ElementCollection(targetClass = RandomAmmo.class, fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "primary")
+    @OneToMany
+    @JoinColumn(name = "ammunitions_primary")
+//    @ElementCollection(targetClass = Ammunition.class, fetch = FetchType.EAGER)
     private List<Ammunition> ammoForPrimary;
-//    @ElementCollection(targetClass = RandomAmmo.class, fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "secondary")
+    @OneToMany
+    @JoinColumn(name = "ammunitions_secondary")
+//    @ElementCollection(targetClass = Ammunition.class, fetch = FetchType.EAGER)
     private List<Ammunition> ammoForSecondary;
     private int totalPrice;
 }

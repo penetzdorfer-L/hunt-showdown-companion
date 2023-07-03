@@ -16,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "weapons")
+@Embeddable
 public class Weapon implements PriceAble {
     @Id
     private String weaponID;

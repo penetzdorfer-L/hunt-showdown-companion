@@ -56,14 +56,14 @@ public class LoadoutService {
         return priceAbles.stream().reduce(0, (currentValue, item) -> currentValue + item.getPrice(), Integer::sum);
     }
 
-    private List<PriceAble> convertToPriceAble(List<Weapon> primary, List<Weapon> secondary, List<Tool> list, List<Consumable> consumables, List<Ammunition> primaryAmmo, List<Ammunition> secondaryAmmo) {
+    private List<PriceAble> convertToPriceAble(List<Weapon> primary, List<Weapon> secondary, List<Tool> tools, List<Consumable> consumables, List<Ammunition> primaryAmmo, List<Ammunition> secondaryAmmo) {
         List<PriceAble> priceAbles = new ArrayList<>();
-        priceAbles.add((PriceAble) primary);
-        priceAbles.add((PriceAble) secondary);
-        priceAbles.add((PriceAble) list);
-        priceAbles.add((PriceAble) consumables);
-        priceAbles.add((PriceAble) primaryAmmo);
-        priceAbles.add((PriceAble) secondaryAmmo);
+        primary.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        secondary.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        tools.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        consumables.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        primaryAmmo.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
+        secondaryAmmo.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
         return priceAbles;
     }
 
