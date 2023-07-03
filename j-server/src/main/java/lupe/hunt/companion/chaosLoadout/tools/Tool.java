@@ -16,7 +16,7 @@ import lupe.hunt.companion.chaosLoadout.loadout.Loadout;
 public class Tool implements PriceAble {
     @Id
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String toolID;

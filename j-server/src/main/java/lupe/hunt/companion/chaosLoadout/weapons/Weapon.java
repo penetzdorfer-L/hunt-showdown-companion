@@ -19,7 +19,7 @@ import java.util.Set;
 public class Weapon implements PriceAble {
     @Id
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String weaponID;
@@ -27,7 +27,7 @@ public class Weapon implements PriceAble {
     private int slots;
     private int bloodlineRank;
     private int ammoSlots;
-    private boolean dualwielable;
+    private boolean dualwieldable;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "weapons_ammunition_connection",
             joinColumns = {@JoinColumn(name = "weapons_weaponID")},

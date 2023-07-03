@@ -17,7 +17,7 @@ public class WeaponService {
     public List<Weapon> getRandomPrimary(LoadoutRequest request) {
         List<Weapon> weaponsFiltered = weaponRepository.findWeaponsByBloodlineRankLessThanEqual(request.getBloodlineRank());
         Weapon weapon = weaponsFiltered.get(helperFunctions.getRandomIndex(0, weaponsFiltered.size()));
-        if (weapon.isDualwielable() && request.isDualWield()) {
+        if (weapon.isDualwieldable() && request.isDualWield()) {
             return flipForDualWield(weapon);
         }
         return new ArrayList<>(List.of(weapon));
@@ -26,7 +26,7 @@ public class WeaponService {
         int slotsAvailable = getSlotsAvailable(request, slotsUsed);
         List<Weapon> weaponsFiltered = weaponRepository.findWeaponsByBloodlineRankLessThanEqualAndSlotsLessThanEqual(request.getBloodlineRank(), slotsAvailable);
         Weapon weapon = weaponsFiltered.get(helperFunctions.getRandomIndex(0, weaponsFiltered.size()));
-        if (weapon.isDualwielable() && request.isDualWield() && slotsAvailable >= 2) {
+        if (weapon.isDualwieldable() && request.isDualWield() && slotsAvailable >= 2) {
             return flipForDualWield(weapon);
         }
         return new ArrayList<>(List.of(weapon));
