@@ -75,4 +75,8 @@ public class AmmunitionService {
         // TODO: find a way to implement a generic way to filter out different kind ammo(long, compact, shotgun, medium)
         return fillWithStandardAmmo(ammunitionDTOList, collectedAmmos);
     }
+
+    public List<AmmunitionDTO> fillWithNothing() {
+        return new ArrayList<>();
+    }
 }
