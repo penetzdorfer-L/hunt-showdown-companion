@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "data-locations",
+      "type": "java.lang.String",
+      "description": "Description for data-locations."
+    },
+    {
+      "name": "spring.sql.init.classpath",
+      "type": "java.lang.String",
+      "description": "Description for spring.sql.init.classpath."
+    }
+  ] }
