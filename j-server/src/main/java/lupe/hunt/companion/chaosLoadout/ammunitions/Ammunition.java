@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lupe.hunt.companion.chaosLoadout.PriceAble;
+import lupe.hunt.companion.chaosLoadout.loadout.Loadout;
 import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
 
 import java.util.List;
@@ -15,8 +16,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ammunitions")
+@Embeddable
 public class Ammunition implements PriceAble {
     @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private String ammoID;
     private String name;
     private String typeOfAmmo;
@@ -24,4 +30,8 @@ public class Ammunition implements PriceAble {
     @JsonIgnore
     private List<Weapon> availableFor;
     private int price;
+    @ManyToOne
+    private Loadout primary;
+    @ManyToOne
+    private Loadout secondary;
 }

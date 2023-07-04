@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping(path="/api/v1/loadouts")
 @AllArgsConstructor
@@ -24,6 +23,7 @@ public class LoadoutController {
     public List<Loadout> filterByMostRolled() {
         return loadoutRepository.findAll();
     }
+
     @PostMapping(path = "/generate")
     @ResponseStatus(HttpStatus.CREATED)
     public Loadout generateLoadout(
@@ -40,6 +40,7 @@ public class LoadoutController {
             throw new RuntimeException(e);
         }
     }
+
     @DeleteMapping(path = "/deleteAll")
     @ResponseStatus(HttpStatus.OK)
     public String deleteLoadouts() {
