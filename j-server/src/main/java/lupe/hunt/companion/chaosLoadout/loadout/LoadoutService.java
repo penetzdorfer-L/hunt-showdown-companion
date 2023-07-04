@@ -32,12 +32,12 @@ public class LoadoutService {
         List<WeaponDTO> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
         Set<Tool> tools = toolService.getRandomTools(request);
         List<ConsumableDTO> consumables = consumableService.getRandomConsumables(request);
-//        Set<Ammunition> primaryAvailableAmmo = weaponService.filterOutAmmo(primary);
-//        Set<Ammunition> secondaryAvailableAmmo = weaponService.filterOutAmmo(secondary);
-//        List<AmmunitionDTO> primaryAmmo = ammunitionService.getRandomAmmo(primaryAvailableAmmo, request);
-//        List<AmmunitionDTO> secondaryAmmo = ammunitionService.getRandomAmmo(secondaryAvailableAmmo ,request);
-        List<AmmunitionDTO> primaryAmmo = ammunitionService.fillWithNothing();
-        List<AmmunitionDTO> secondaryAmmo = ammunitionService.fillWithNothing();
+        Set<Ammunition> primaryAvailableAmmo = weaponService.filterOutAmmo(primary);
+        Set<Ammunition> secondaryAvailableAmmo = weaponService.filterOutAmmo(secondary);
+        List<AmmunitionDTO> primaryAmmo = ammunitionService.getRandomAmmo(primaryAvailableAmmo, request);
+        List<AmmunitionDTO> secondaryAmmo = ammunitionService.getRandomAmmo(secondaryAvailableAmmo ,request);
+//        List<AmmunitionDTO> primaryAmmo = ammunitionService.fillWithNothing();
+//        List<AmmunitionDTO> secondaryAmmo = ammunitionService.fillWithNothing();
         int totalPrice = getTotalPrice(primary, secondary, tools, consumables, primaryAmmo, secondaryAmmo);
         return constructLoadout(primary, secondary, tools, consumables, totalPrice, primaryAmmo, secondaryAmmo);
     }

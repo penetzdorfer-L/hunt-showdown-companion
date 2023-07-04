@@ -21,6 +21,5 @@ public class WeaponDTO implements PriceAble {
     private int bloodlineRank;
     private int ammoSlots;
     private boolean dualwieldable;
-    //private Set<Ammunition> ammoSet;
     private int price;
 }

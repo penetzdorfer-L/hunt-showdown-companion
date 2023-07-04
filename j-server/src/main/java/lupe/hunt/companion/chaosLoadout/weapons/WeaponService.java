@@ -58,6 +58,11 @@ public class WeaponService {
         return slotsAvailable;
     }
 
+    public Set<Ammunition> filterOutAmmo(List<WeaponDTO> primary) {
+        String weaponID = primary.stream().findFirst().get().getWeaponID();
+        return weaponRepository.findWeaponsByWeaponID(weaponID).getAmmoSet();
+    }
+
 //    public Set<Ammunition> filterOutAmmo(List<WeaponDTO> primary) {
 //        return primary.stream().findFirst().get().getAmmoSet();
 //    }

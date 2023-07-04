@@ -6,10 +6,12 @@ import lupe.hunt.companion.chaosLoadout.loadout.data.AmmunitionDTO;
 import lupe.hunt.companion.chaosLoadout.loadout.data.WeaponDTO;
 import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
 import lupe.hunt.companion.logic.HelperFunctions;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -17,8 +19,10 @@ import java.util.Set;
 public class AmmunitionService {
     private final AmmunitionRepository ammunitionRepository;
     private final HelperFunctions helperFunctions;
+    private final ModelMapper mapper;
     public List<AmmunitionDTO> getRandomAmmo(Set<Ammunition> ammoForWeapon, LoadoutRequest request) {
-        return new ArrayList<>();
+        Optional<Ammunition> first = ammoForWeapon.stream().findFirst();
+        return first.map(ammunition -> new ArrayList<>(List.of(mapper.map(ammunition, AmmunitionDTO.class)))).orElseGet(ArrayList::new);
         //TODO: work with repository weapon to get desired lists
 //        List<RandomAmmo> randomAmmos = new ArrayList<>();
 //        List<RandomAmmo> collectedAmmosFromWeapon = weaponList.stream().findFirst().get().getAmmoSet().stream().toList();
