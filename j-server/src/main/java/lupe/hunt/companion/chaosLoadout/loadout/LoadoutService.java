@@ -36,8 +36,6 @@ public class LoadoutService {
         Set<Ammunition> secondaryAvailableAmmo = weaponService.filterOutAmmo(secondary);
         List<AmmunitionDTO> primaryAmmo = ammunitionService.getRandomAmmo(primaryAvailableAmmo, request);
         List<AmmunitionDTO> secondaryAmmo = ammunitionService.getRandomAmmo(secondaryAvailableAmmo ,request);
-//        List<AmmunitionDTO> primaryAmmo = ammunitionService.fillWithNothing();
-//        List<AmmunitionDTO> secondaryAmmo = ammunitionService.fillWithNothing();
         int totalPrice = getTotalPrice(primary, secondary, tools, consumables, primaryAmmo, secondaryAmmo);
         return constructLoadout(primary, secondary, tools, consumables, totalPrice, primaryAmmo, secondaryAmmo);
     }

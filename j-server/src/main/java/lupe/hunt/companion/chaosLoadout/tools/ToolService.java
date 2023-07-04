@@ -26,7 +26,7 @@ public class ToolService {
     private void addToolsToList(Set<Tool> randomTools, List<Tool> toolList) {
         while (!(randomTools.size() == 4)) {
             Tool tool = toolList.get(helperFunctions.getRandomIndex(0, toolList.size()));
-            randomTools.add(tool); //is this better than checking for conditions?
+            randomTools.add(tool);
         }
     }
     private void requestChecker(LoadoutRequest request, Set<Tool> randomTools) {

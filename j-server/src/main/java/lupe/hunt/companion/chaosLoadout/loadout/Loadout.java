@@ -24,27 +24,17 @@ public class Loadout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-//    @OneToMany
-//    @JoinColumn(name = "weapons_primary")
     @ElementCollection(targetClass = WeaponDTO.class, fetch = FetchType.EAGER)
     private List<WeaponDTO> primary;
-//    @OneToMany
-//    @JoinColumn(name = "weapons_secondary")
     @ElementCollection(targetClass = WeaponDTO.class, fetch = FetchType.EAGER)
     private List<WeaponDTO> secondary;
     @OneToMany
     @JoinColumn(name = "tools_toolID", referencedColumnName = "ID")
     private Set<Tool> tools;
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "consumables_loadout")
     @ElementCollection(targetClass = ConsumableDTO.class, fetch = FetchType.EAGER)
     private List<ConsumableDTO> consumables;
-//    @OneToMany
-//    @JoinColumn(name = "ammunitions_primary")
     @ElementCollection(targetClass = AmmunitionDTO.class, fetch = FetchType.EAGER)
     private List<AmmunitionDTO> ammoForPrimary;
-//    @OneToMany
-//    @JoinColumn(name = "ammunitions_secondary")
     @ElementCollection(targetClass = AmmunitionDTO.class, fetch = FetchType.EAGER)
     private List<AmmunitionDTO> ammoForSecondary;
     private int totalPrice;

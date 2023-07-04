@@ -62,8 +62,4 @@ public class WeaponService {
         String weaponID = primary.stream().findFirst().get().getWeaponID();
         return weaponRepository.findWeaponsByWeaponID(weaponID).getAmmoSet();
     }
-
-//    public Set<Ammunition> filterOutAmmo(List<WeaponDTO> primary) {
-//        return primary.stream().findFirst().get().getAmmoSet();
-//    }
 }

@@ -15,10 +15,8 @@ import lupe.hunt.companion.chaosLoadout.loadout.Loadout;
 @Embeddable
 public class Consumable implements PriceAble {
     @Id
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private String consumableID;
     private String name;
     private int bloodlineRank;

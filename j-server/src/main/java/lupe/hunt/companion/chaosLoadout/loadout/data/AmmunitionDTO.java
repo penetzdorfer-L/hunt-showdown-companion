@@ -11,6 +11,8 @@ import lupe.hunt.companion.chaosLoadout.PriceAble;
 @NoArgsConstructor
 @Embeddable
 public class AmmunitionDTO implements PriceAble {
+    private long id;
+    private String ammoID;
     private String name;
     private String typeOfAmmo;
     private int price;
