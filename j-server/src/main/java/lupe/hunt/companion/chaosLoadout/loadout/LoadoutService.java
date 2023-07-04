@@ -6,6 +6,9 @@ import lupe.hunt.companion.chaosLoadout.ammunitions.Ammunition;
 import lupe.hunt.companion.chaosLoadout.ammunitions.AmmunitionService;
 import lupe.hunt.companion.chaosLoadout.consumables.Consumable;
 import lupe.hunt.companion.chaosLoadout.consumables.ConsumableService;
+import lupe.hunt.companion.chaosLoadout.loadout.data.AmmunitionDTO;
+import lupe.hunt.companion.chaosLoadout.loadout.data.ConsumableDTO;
+import lupe.hunt.companion.chaosLoadout.loadout.data.WeaponDTO;
 import lupe.hunt.companion.chaosLoadout.tools.Tool;
 import lupe.hunt.companion.chaosLoadout.tools.ToolService;
 import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
@@ -25,19 +28,19 @@ public class LoadoutService {
     private final AmmunitionService ammunitionService;
 
     public Loadout generateLoadout(LoadoutRequest request) {
-        List<Weapon> primary = weaponService.getRandomPrimary(request);
-        List<Weapon> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
+        List<WeaponDTO> primary = weaponService.getRandomPrimary(request);
+        List<WeaponDTO> secondary = weaponService.getRandomSecondary(request, getSlotsAfterPrimary(primary));
         Set<Tool> tools = toolService.getRandomTools(request);
-        List<Consumable> consumables = consumableService.getRandomConsumables(request);
-//        Set<RandomAmmo> primaryAvailableAmmo = weaponService.filterOutAmmo(primary);
-//        Set<RandomAmmo> secondaryAvailableAmmo = weaponService.filterOutAmmo(secondary);
-        List<Ammunition> primaryAmmo = ammunitionService.getRandomAmmo(primary, request);
-        List<Ammunition> secondaryAmmo = ammunitionService.getRandomAmmo(secondary ,request);
+        List<ConsumableDTO> consumables = consumableService.getRandomConsumables(request);
+        Set<Ammunition> primaryAvailableAmmo = weaponService.filterOutAmmo(primary);
+        Set<Ammunition> secondaryAvailableAmmo = weaponService.filterOutAmmo(secondary);
+        List<AmmunitionDTO> primaryAmmo = ammunitionService.getRandomAmmo(primaryAvailableAmmo, request);
+        List<AmmunitionDTO> secondaryAmmo = ammunitionService.getRandomAmmo(secondaryAvailableAmmo ,request);
         int totalPrice = getTotalPrice(primary, secondary, tools, consumables, primaryAmmo, secondaryAmmo);
         return constructLoadout(primary, secondary, tools, consumables, totalPrice, primaryAmmo, secondaryAmmo);
     }
 
-    private Loadout constructLoadout(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables, int totalPrice, List<Ammunition> primaryAmmo, List<Ammunition> secondaryAmmo) {
+    private Loadout constructLoadout(List<WeaponDTO> primary, List<WeaponDTO> secondary, Set<Tool> tools, List<ConsumableDTO> consumables, int totalPrice, List<AmmunitionDTO> primaryAmmo, List<AmmunitionDTO> secondaryAmmo) {
         Loadout randomLoadout = new Loadout();
         randomLoadout.setPrimary(primary);
         randomLoadout.setSecondary(secondary);
@@ -49,12 +52,12 @@ public class LoadoutService {
         return randomLoadout;
     }
 
-    private int getTotalPrice(List<Weapon> primary, List<Weapon> secondary, Set<Tool> tools, List<Consumable> consumables, List<Ammunition> primaryAmmo, List<Ammunition> secondaryAmmo) {
+    private int getTotalPrice(List<WeaponDTO> primary, List<WeaponDTO> secondary, Set<Tool> tools, List<ConsumableDTO> consumables, List<AmmunitionDTO> primaryAmmo, List<AmmunitionDTO> secondaryAmmo) {
         List<PriceAble> priceAbles = convertToPriceAble(primary, secondary, tools.stream().toList(), consumables, primaryAmmo, secondaryAmmo);
         return priceAbles.stream().reduce(0, (currentValue, item) -> currentValue + item.getPrice(), Integer::sum);
     }
 
-    private List<PriceAble> convertToPriceAble(List<Weapon> primary, List<Weapon> secondary, List<Tool> tools, List<Consumable> consumables, List<Ammunition> primaryAmmo, List<Ammunition> secondaryAmmo) {
+    private List<PriceAble> convertToPriceAble(List<WeaponDTO> primary, List<WeaponDTO> secondary, List<Tool> tools, List<ConsumableDTO> consumables, List<AmmunitionDTO> primaryAmmo, List<AmmunitionDTO> secondaryAmmo) {
         List<PriceAble> priceAbles = new ArrayList<>();
         primary.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
         secondary.stream().map(el -> (PriceAble) el).forEach(priceAbles::add);
@@ -65,18 +68,8 @@ public class LoadoutService {
         return priceAbles;
     }
 
-    private Integer getSlotsAfterPrimary(List<Weapon> primary) {
+    private Integer getSlotsAfterPrimary(List<WeaponDTO> primary) {
         return primary.stream()
                 .reduce(0, (accumulator, weapon) -> accumulator + weapon.getSlots(), Integer::sum);
-    }
-    public Loadout testDuplicate() {
-        Loadout loadout = new Loadout();
-        loadout.setPrimary(new ArrayList<>());
-        loadout.setSecondary(new ArrayList<>());
-        loadout.setTools(new HashSet<>());
-        loadout.setConsumables(consumableService.generateDuplicates());
-        loadout.setAmmoForPrimary(new ArrayList<>());
-        loadout.setAmmoForSecondary(new ArrayList<>());
-        return loadout;
     }
 }

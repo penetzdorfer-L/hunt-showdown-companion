@@ -10,12 +10,11 @@ import lupe.hunt.companion.chaosLoadout.PriceAble;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class RandomWeapon implements PriceAble {
+public class ConsumableDTO implements PriceAble {
+    private long id;
+    private String consumableID;
     private String name;
-    private int slots;
     private int bloodlineRank;
-    private int ammoSlots;
-    private boolean dualwielable;
     private int price;
-//    private Set<RandomAmmo> ammoSet;
+    private String type;
 }

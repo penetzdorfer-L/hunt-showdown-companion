@@ -47,12 +47,4 @@ public class LoadoutController {
         loadoutRepository.deleteAll();
         return "Deleted all Loadouts!";
     }
-
-    @PostMapping(path = "/generate/duplicate")
-    @ResponseStatus(HttpStatus.OK)
-    public Loadout generateDuplicate() {
-        Loadout loadout = loadoutService.testDuplicate();
-        loadoutRepository.save(loadout);
-        return loadout;
-    }
 }
