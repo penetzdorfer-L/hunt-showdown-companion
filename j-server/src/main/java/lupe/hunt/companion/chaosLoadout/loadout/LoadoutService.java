@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lupe.hunt.companion.chaosLoadout.PriceAble;
 import lupe.hunt.companion.chaosLoadout.ammunitions.Ammunition;
 import lupe.hunt.companion.chaosLoadout.ammunitions.AmmunitionService;
-import lupe.hunt.companion.chaosLoadout.consumables.Consumable;
 import lupe.hunt.companion.chaosLoadout.consumables.ConsumableService;
 import lupe.hunt.companion.chaosLoadout.loadout.data.AmmunitionDTO;
 import lupe.hunt.companion.chaosLoadout.loadout.data.ConsumableDTO;
 import lupe.hunt.companion.chaosLoadout.loadout.data.WeaponDTO;
 import lupe.hunt.companion.chaosLoadout.tools.Tool;
 import lupe.hunt.companion.chaosLoadout.tools.ToolService;
-import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
 import lupe.hunt.companion.chaosLoadout.weapons.WeaponService;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +32,8 @@ public class LoadoutService {
         List<ConsumableDTO> consumables = consumableService.getRandomConsumables(request);
         Set<Ammunition> primaryAvailableAmmo = weaponService.filterOutAmmo(primary);
         Set<Ammunition> secondaryAvailableAmmo = weaponService.filterOutAmmo(secondary);
-        List<AmmunitionDTO> primaryAmmo = ammunitionService.getRandomAmmo(primaryAvailableAmmo, request);
-        List<AmmunitionDTO> secondaryAmmo = ammunitionService.getRandomAmmo(secondaryAvailableAmmo ,request);
+        List<AmmunitionDTO> primaryAmmo = ammunitionService.getAmmo(primary, primaryAvailableAmmo, request);
+        List<AmmunitionDTO> secondaryAmmo = ammunitionService.getAmmo(secondary, secondaryAvailableAmmo ,request);
         int totalPrice = getTotalPrice(primary, secondary, tools, consumables, primaryAmmo, secondaryAmmo);
         return constructLoadout(primary, secondary, tools, consumables, totalPrice, primaryAmmo, secondaryAmmo);
     }

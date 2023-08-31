@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lupe.hunt.companion.chaosLoadout.loadout.LoadoutRequest;
 import lupe.hunt.companion.chaosLoadout.loadout.data.AmmunitionDTO;
 import lupe.hunt.companion.chaosLoadout.loadout.data.WeaponDTO;
-import lupe.hunt.companion.chaosLoadout.weapons.Weapon;
 import lupe.hunt.companion.logic.HelperFunctions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -20,14 +18,36 @@ public class AmmunitionService {
     private final AmmunitionRepository ammunitionRepository;
     private final HelperFunctions helperFunctions;
     private final ModelMapper mapper;
-    public List<AmmunitionDTO> getRandomAmmo(Set<Ammunition> ammoForWeapon, LoadoutRequest request) {
-        Optional<Ammunition> first = ammoForWeapon.stream().findFirst();
-        return first.map(ammunition -> new ArrayList<>(List.of(mapper.map(ammunition, AmmunitionDTO.class)))).orElseGet(ArrayList::new);
-        //TODO: work with repository weapon to get desired lists
-//        List<RandomAmmo> randomAmmos = new ArrayList<>();
-//        List<RandomAmmo> collectedAmmosFromWeapon = weaponList.stream().findFirst().get().getAmmoSet().stream().toList();
-//        return delegateForDualSlotWeapon(randomAmmos, collectedAmmosFromWeapon, weaponList, request);
+    public List<AmmunitionDTO> getAmmo(List<WeaponDTO> weapon, Set<Ammunition> ammoForWeapon, LoadoutRequest request) {
+        if (ammoForWeapon.isEmpty() || !(request.isSpecialAmmo())) {
+            return handleVanillaOrEmpty(ammoForWeapon);
+        }
+        return getRandomAmmo(weapon, ammoForWeapon);
     }
+
+    private List<AmmunitionDTO> getRandomAmmo(List<WeaponDTO> weapon, Set<Ammunition> ammoForWeapon) {
+        //TODO: work with repository weapon to get desired lists
+        return null;
+    }
+
+    private List<AmmunitionDTO> handleVanillaOrEmpty(Set<Ammunition> ammoForWeapon) {
+        if (ammoForWeapon.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return getVanillaDTO(ammoForWeapon.stream()
+                .filter(el -> el.getTypeOfAmmo().equals("standard"))
+                .toList());
+    }
+
+    private List<AmmunitionDTO> getVanillaDTO(List<Ammunition> standard) {
+        if (standard.size() > 1) {
+            List<AmmunitionDTO> ammunition = new ArrayList<>();
+            standard.forEach(el -> ammunition.add(mapper.map(el, AmmunitionDTO.class)));
+            return ammunition;
+        }
+        return new ArrayList<>(List.of(mapper.map(standard.stream().findFirst(), AmmunitionDTO.class)));
+    }
+
     private List<AmmunitionDTO> delegateForDualSlotWeapon(List<AmmunitionDTO> ammunitionDTOS, List<AmmunitionDTO> collectedAmmosFromWeapon, List<WeaponDTO> weaponList, LoadoutRequest request) {
         WeaponDTO weapon = weaponList.stream().findFirst().get();
         if (weapon.getAmmoSlots() > 1) {
