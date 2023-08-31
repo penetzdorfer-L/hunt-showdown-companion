@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 @Service
 @AllArgsConstructor
@@ -18,89 +19,67 @@ public class AmmunitionService {
     private final AmmunitionRepository ammunitionRepository;
     private final HelperFunctions helperFunctions;
     private final ModelMapper mapper;
-    public List<AmmunitionDTO> getAmmo(List<WeaponDTO> weapon, Set<Ammunition> ammoForWeapon, LoadoutRequest request) {
+
+    public List<AmmunitionDTO> getAmmo(List<WeaponDTO> DTOweapons, Set<Ammunition> ammoForWeapon, LoadoutRequest request) {
+        WeaponDTO weapon = DTOweapons.stream().findFirst().get();
         if (ammoForWeapon.isEmpty() || !(request.isSpecialAmmo())) {
-            return handleVanillaOrEmpty(ammoForWeapon);
+            return handleVanillaOrEmpty(ammoForWeapon, weapon);
         }
         return getRandomAmmo(weapon, ammoForWeapon);
     }
 
-    private List<AmmunitionDTO> getRandomAmmo(List<WeaponDTO> weapon, Set<Ammunition> ammoForWeapon) {
-        //TODO: work with repository weapon to get desired lists
-        return null;
-    }
-
-    private List<AmmunitionDTO> handleVanillaOrEmpty(Set<Ammunition> ammoForWeapon) {
+    private List<AmmunitionDTO> handleVanillaOrEmpty(Set<Ammunition> ammoForWeapon, WeaponDTO weapon) {
         if (ammoForWeapon.isEmpty()) {
             return new ArrayList<>();
         }
-        return getVanillaDTO(ammoForWeapon.stream()
-                .filter(el -> el.getTypeOfAmmo().equals("standard"))
-                .toList());
+        List<Ammunition> standard = ammoForWeapon.stream()
+                .filter(el -> el.getTypeOfAmmo().equalsIgnoreCase("standard"))
+                .toList();
+        return getVanillaDTO(standard, weapon);
     }
 
-    private List<AmmunitionDTO> getVanillaDTO(List<Ammunition> standard) {
+    private List<AmmunitionDTO> getVanillaDTO(List<Ammunition> standard, WeaponDTO weapon) {
         if (standard.size() > 1) {
             List<AmmunitionDTO> ammunition = new ArrayList<>();
             standard.forEach(el -> ammunition.add(mapper.map(el, AmmunitionDTO.class)));
             return ammunition;
         }
-        return new ArrayList<>(List.of(mapper.map(standard.stream().findFirst(), AmmunitionDTO.class)));
+        Ammunition ammunition = standard.stream().findFirst().get();
+        return fillWithVanillaAmmo(ammunition, weapon);
     }
 
-    private List<AmmunitionDTO> delegateForDualSlotWeapon(List<AmmunitionDTO> ammunitionDTOS, List<AmmunitionDTO> collectedAmmosFromWeapon, List<WeaponDTO> weaponList, LoadoutRequest request) {
-        WeaponDTO weapon = weaponList.stream().findFirst().get();
-        if (weapon.getAmmoSlots() > 1) {
-            return getFilledDualSlotWeapon(ammunitionDTOS, collectedAmmosFromWeapon ,request);
-        }
-        return getFilledSingleSlotWeapon(ammunitionDTOS, collectedAmmosFromWeapon, request, weapon);
+    private List<AmmunitionDTO> fillWithVanillaAmmo(Ammunition standard, WeaponDTO weapon) {
+        ArrayList<AmmunitionDTO> ammunitions = new ArrayList<>();
+        IntStream.of(weapon.getAmmoSlots()).forEach(el -> ammunitions.add(mapper.map(standard, AmmunitionDTO.class)));
+        return (List.of(mapper.map(standard, AmmunitionDTO.class)));
     }
 
-    private List<AmmunitionDTO> getFilledSingleSlotWeapon(List<AmmunitionDTO> ammunitionDTOList, List<AmmunitionDTO> collectedAmmosFromWeapon, LoadoutRequest request, WeaponDTO weapon) {
-        if (!(request.isSpecialAmmo())) {
-            return fillWithStandardAmmo(ammunitionDTOList, collectedAmmosFromWeapon);
+    private List<AmmunitionDTO> getRandomAmmo(WeaponDTO weapon, Set<Ammunition> ammoForWeapon) {
+        List<AmmunitionDTO> ammunitionDTOS = checkForDualTypeWeapons(ammoForWeapon);
+        if (!(ammunitionDTOS.isEmpty())) {
+            return ammunitionDTOS;
         }
-        return delegateIfSpecial(ammunitionDTOList, collectedAmmosFromWeapon, weapon);
+        return getFilledRandomAmmoList(weapon, ammoForWeapon, ammunitionDTOS);
     }
 
-    private List<AmmunitionDTO> delegateIfSpecial(List<AmmunitionDTO> ammunitionDTOList, List<AmmunitionDTO> collectedAmmosFromWeapon, WeaponDTO weapon) {
-        if (!(helperFunctions.isSpecialAmmo())) {
-            return fillWithStandardAmmo(ammunitionDTOList, collectedAmmosFromWeapon);
+    private List<AmmunitionDTO> checkForDualTypeWeapons(Set<Ammunition> ammoForWeapon) {
+        List<Ammunition> vanillaAmmo = ammoForWeapon.stream()
+                .filter(el -> el.getTypeOfAmmo().equalsIgnoreCase("standard"))
+                .toList();
+        if (vanillaAmmo.size() > 1) {
+            //TODO: Think of dual Type Weapons Solution
+            List<AmmunitionDTO> vanillaAmmoForNow = new ArrayList<>();
+            vanillaAmmo.forEach(el -> vanillaAmmoForNow.add(mapper.map(el, AmmunitionDTO.class)));
+            return vanillaAmmoForNow;
         }
-        return filterSpecialAmmo(ammunitionDTOList, collectedAmmosFromWeapon, weapon);
-    }
-    private List<AmmunitionDTO> filterSpecialAmmo(List<AmmunitionDTO> ammunitionDTOList, List<AmmunitionDTO> collectedAmmosFromWeapon, WeaponDTO weapon) {
-        int ammoSlots = weapon.getAmmoSlots();
-        List<AmmunitionDTO> filteredAmmosFromWeapon = new ArrayList<>();
-        for (int i = 0; i < ammoSlots; i++) {
-            AmmunitionDTO ammunitionDTO = collectedAmmosFromWeapon.get(helperFunctions.getRandomIndex(0, collectedAmmosFromWeapon.size()));
-            filteredAmmosFromWeapon.add(ammunitionDTO);
-        }
-        return fillWithSpecialAmmo(ammunitionDTOList, collectedAmmosFromWeapon);
-    }
-    private List<AmmunitionDTO> fillWithStandardAmmo(List<AmmunitionDTO> ammunitionDTOList, List<AmmunitionDTO> collectedAmmosFromWeapon) {
-        List<AmmunitionDTO> standard = collectedAmmosFromWeapon.stream().filter(el -> el.getTypeOfAmmo().equalsIgnoreCase("standard")).toList();
-        return fillListWithAmmos(ammunitionDTOList, standard);
-    }
-    private List<AmmunitionDTO> fillWithSpecialAmmo(List<AmmunitionDTO> ammunitionDTOList, List<AmmunitionDTO> filteredAmmo) {
-        return fillListWithAmmos(ammunitionDTOList, filteredAmmo);
-    }
-    private List<AmmunitionDTO> fillListWithAmmos(List<AmmunitionDTO> ammunitionDTOList, List<AmmunitionDTO> filteredAmmo) {
-        for (AmmunitionDTO ammunition : filteredAmmo) {
-            AmmunitionDTO ammunitionDTO = new AmmunitionDTO();
-            ammunitionDTO.setName(ammunition.getName());
-            ammunitionDTO.setPrice(ammunition.getPrice());
-            ammunitionDTO.setTypeOfAmmo(ammunition.getTypeOfAmmo());
-            ammunitionDTOList.add(ammunitionDTO);
-        }
-        return ammunitionDTOList;
-    }
-    private List<AmmunitionDTO> getFilledDualSlotWeapon(List<AmmunitionDTO> ammunitionDTOList, List<AmmunitionDTO> collectedAmmos, LoadoutRequest request) {
-        // TODO: find a way to implement a generic way to filter out different kind ammo(long, compact, shotgun, medium)
-        return fillWithStandardAmmo(ammunitionDTOList, collectedAmmos);
-    }
-
-    public List<AmmunitionDTO> fillWithNothing() {
         return new ArrayList<>();
+    }
+    private List<AmmunitionDTO> getFilledRandomAmmoList(WeaponDTO weapon, Set<Ammunition> ammoForWeapon, List<AmmunitionDTO> ammunitionDTOS) {
+        List<Ammunition> ammoConvertedToList = ammoForWeapon.stream().toList();
+        while(ammunitionDTOS.size() < weapon.getAmmoSlots()){
+            int randomIndex = helperFunctions.getRandomIndex(0, ammoConvertedToList.size());
+            ammunitionDTOS.add(mapper.map(ammoConvertedToList.get(randomIndex), AmmunitionDTO.class));
+        }
+        return ammunitionDTOS;
     }
 }
